@@ -1,6 +1,5 @@
-package io.github.generallyspecific.nba_application.data;
+package io.github.generallyspecific.nba_application.data.games;
 
-import io.github.generallyspecific.nba_application.data.GamesInput;
 import io.github.generallyspecific.nba_application.model.Games;
 import org.springframework.batch.item.ItemProcessor;
 

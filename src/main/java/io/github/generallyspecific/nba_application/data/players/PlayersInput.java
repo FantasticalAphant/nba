@@ -1,4 +1,4 @@
-package io.github.generallyspecific.nba_application.data;
+package io.github.generallyspecific.nba_application.data.players;
 
 public class PlayersInput {
     private String player_name;

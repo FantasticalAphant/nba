@@ -1,4 +1,4 @@
-package io.github.generallyspecific.nba_application.data;
+package io.github.generallyspecific.nba_application.data.games;
 
 public class GamesInput {
     private String game_date_est;

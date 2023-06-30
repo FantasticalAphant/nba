@@ -1,4 +1,4 @@
-package io.github.generallyspecific.nba_application.data;
+package io.github.generallyspecific.nba_application.data.teams;
 
 public class TeamsInput {
     private String team_id;

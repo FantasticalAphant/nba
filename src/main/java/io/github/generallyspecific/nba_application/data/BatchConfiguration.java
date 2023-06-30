@@ -1,5 +1,11 @@
 package io.github.generallyspecific.nba_application.data;
 
+import io.github.generallyspecific.nba_application.data.games.GamesDataProcessor;
+import io.github.generallyspecific.nba_application.data.games.GamesInput;
+import io.github.generallyspecific.nba_application.data.players.PlayersDataProcessor;
+import io.github.generallyspecific.nba_application.data.players.PlayersInput;
+import io.github.generallyspecific.nba_application.data.teams.TeamsDataProcessor;
+import io.github.generallyspecific.nba_application.data.teams.TeamsInput;
 import io.github.generallyspecific.nba_application.model.Games;
 import io.github.generallyspecific.nba_application.model.Players;
 import io.github.generallyspecific.nba_application.model.Teams;
