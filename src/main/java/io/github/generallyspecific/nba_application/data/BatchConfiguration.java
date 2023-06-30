@@ -2,6 +2,7 @@ package io.github.generallyspecific.nba_application.data;
 
 import io.github.generallyspecific.nba_application.model.Games;
 import io.github.generallyspecific.nba_application.model.Players;
+import io.github.generallyspecific.nba_application.model.Teams;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
@@ -32,6 +33,10 @@ public class BatchConfiguration {
 
     private final String[] GAMES_FIELD_NAMES = new String[] {
             "game_date_est","game_id","game_status_text","home_team_id","visitor_team_id","season","team_id_home","pts_home","fg_pct_home","ft_pct_home","fg3_pct_home","ast_home","reb_home","team_id_away","pts_away","fg_pct_away","ft_pct_away","fg3_pct_away","ast_away","reb_away","home_team_wins"
+    };
+
+    private final String[] TEAMS_FIELD_NAMES = new String[] {
+            "team_id", "min_year", "max_year", "abbreviation", "nickname", "year_founded", "city", "arena", "owner", "general_manager", "head_coach"
     };
 
     @Bean
@@ -93,13 +98,43 @@ public class BatchConfiguration {
     }
 
     @Bean
+    public FlatFileItemReader<TeamsInput> reader2() {
+        return new FlatFileItemReaderBuilder<TeamsInput>()
+                .name("teamsItemReader")
+                .resource(new ClassPathResource("teams_updated.csv"))
+                .linesToSkip(1)
+                .delimited()
+                .names(TEAMS_FIELD_NAMES)
+                .fieldSetMapper(new BeanWrapperFieldSetMapper<>() {{
+                    setTargetType(TeamsInput.class);
+                }})
+                .build();
+    }
+
+    @Bean
+    public TeamsDataProcessor processor2() {
+        return new TeamsDataProcessor();
+    }
+
+    @Bean
+    public JdbcBatchItemWriter<Teams> writer2(DataSource dataSource) {
+        return new JdbcBatchItemWriterBuilder<Teams>()
+                .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
+                .sql("INSERT INTO teams (team_id, min_year, max_year, abbreviation, nickname, year_founded, city, arena, owner, general_manager, head_coach)"
+                        + " VALUES (:teamId, :minYear, :maxYear, :abbreviation, :nickname, :yearFounded, :city, :arena, :owner, :generalManager, :headCoach)")
+                .dataSource(dataSource)
+                .build();
+    }
+
+    @Bean
     public Job importUserJob(JobRepository jobRepository,
-                             JobCompletionNotificationListener listener, Step step1, Step step2) {
+                             JobCompletionNotificationListener listener, Step step1, Step step2, Step step3) {
         return new JobBuilder("importUserJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .listener(listener)
                 .flow(step1)
                 .next(step2)
+                .next(step3)
                 .end()
                 .build();
     }
@@ -122,6 +157,17 @@ public class BatchConfiguration {
                 .<GamesInput, Games> chunk(10, transactionManager)
                 .reader(reader())
                 .processor(processor())
+                .writer(writer)
+                .build();
+    }
+
+    @Bean
+    public Step step3(JobRepository jobRepository,
+                      PlatformTransactionManager transactionManager, JdbcBatchItemWriter<Teams> writer) {
+        return new StepBuilder("step3", jobRepository)
+                .<TeamsInput, Teams> chunk(10, transactionManager)
+                .reader(reader2())
+                .processor(processor2())
                 .writer(writer)
                 .build();
     }
