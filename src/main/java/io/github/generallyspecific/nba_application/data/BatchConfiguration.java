@@ -98,9 +98,8 @@ public class BatchConfiguration {
         return new JobBuilder("importUserJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .listener(listener)
-//                .flow(step1)
-//                .next(step2)
-                .flow(step2)
+                .flow(step1)
+                .next(step2)
                 .end()
                 .build();
     }

@@ -56,6 +56,11 @@ public class Games {
     public Games() {
     }
 
+    public Games(LocalDate gameDateEST, int gameID) {
+        this.gameDateEST = gameDateEST;
+        this.gameID = gameID;
+    }
+
     public Games(LocalDate gameDateEST, int gameID, String gameStatusText, int homeTeamID, int visitorTeamID, short season, int teamIDHome, short ptsHome, double fgPctHome, double ftPctHome, double fg3PctHome, byte astHome, byte rebHome, int teamIDAway, short ptsAway, double fgPctAway, double ftPctAway, double fg3PctAway, byte astAway, byte rebAway, byte homeTeamWins) {
         this.gameDateEST = gameDateEST;
         this.gameID = gameID;
