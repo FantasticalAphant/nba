@@ -2,16 +2,15 @@ package io.github.generallyspecific.nba_application.data;
 
 import io.github.generallyspecific.nba_application.data.games.GamesDataProcessor;
 import io.github.generallyspecific.nba_application.data.games.GamesInput;
+import io.github.generallyspecific.nba_application.data.gamesdetails.GamesDetailsDataProcessor;
+import io.github.generallyspecific.nba_application.data.gamesdetails.GamesDetailsInput;
 import io.github.generallyspecific.nba_application.data.players.PlayersDataProcessor;
 import io.github.generallyspecific.nba_application.data.players.PlayersInput;
 import io.github.generallyspecific.nba_application.data.ranking.RankingDataProcessor;
 import io.github.generallyspecific.nba_application.data.ranking.RankingInput;
 import io.github.generallyspecific.nba_application.data.teams.TeamsDataProcessor;
 import io.github.generallyspecific.nba_application.data.teams.TeamsInput;
-import io.github.generallyspecific.nba_application.model.Games;
-import io.github.generallyspecific.nba_application.model.Players;
-import io.github.generallyspecific.nba_application.model.Ranking;
-import io.github.generallyspecific.nba_application.model.Teams;
+import io.github.generallyspecific.nba_application.model.*;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
@@ -50,11 +49,15 @@ public class BatchConfiguration {
             "teamId", "seasonId", "standingsDate", "conference", "team", "g", "w", "l", "wPct", "homeRecord", "roadRecord"
     };
 
+    private final String[] GAMES_DETAILS_FIELD_NAMES = new String[] {
+            "game_id", "team_id", "team_abbreviation", "team_city", "player_id", "player_name", "nickname", "start_position", "comment", "min", "fgm", "fga", "fg_pct", "fg3m", "fg3a", "fg3_pct", "ftm", "fta", "ft_pct", "oreb", "dreb", "reb", "ast", "stl", "blk", "to", "pf", "pts", "plus_minus"
+    };
+
     @Bean
     public FlatFileItemReader<GamesInput> reader() {
         return new FlatFileItemReaderBuilder<GamesInput>()
                 .name("gamesItemReader")
-                .resource(new ClassPathResource("games.csv"))
+                .resource(new ClassPathResource("csv/games.csv"))
                 .linesToSkip(1)
                 .delimited()
                 .names(GAMES_FIELD_NAMES)
@@ -83,7 +86,7 @@ public class BatchConfiguration {
     public FlatFileItemReader<PlayersInput> reader1() {
         return new FlatFileItemReaderBuilder<PlayersInput>()
                 .name("playersItemReader")
-                .resource(new ClassPathResource("players.csv"))
+                .resource(new ClassPathResource("csv/players.csv"))
                 .linesToSkip(1)
                 .delimited()
                 .names(PLAYERS_FIELD_NAMES)
@@ -112,7 +115,7 @@ public class BatchConfiguration {
     public FlatFileItemReader<TeamsInput> reader2() {
         return new FlatFileItemReaderBuilder<TeamsInput>()
                 .name("teamsItemReader")
-                .resource(new ClassPathResource("teams_updated.csv"))
+                .resource(new ClassPathResource("csv/teams_updated.csv"))
                 .linesToSkip(1)
                 .delimited()
                 .names(TEAMS_FIELD_NAMES)
@@ -141,7 +144,7 @@ public class BatchConfiguration {
     public FlatFileItemReader<RankingInput> reader3() {
         return new FlatFileItemReaderBuilder<RankingInput>()
                 .name("rankingItemReader")
-                .resource(new ClassPathResource("ranking.csv"))
+                .resource(new ClassPathResource("csv/ranking.csv"))
                 .linesToSkip(1)
                 .delimited()
                 .names(RANKING_FIELD_NAMES)
@@ -167,16 +170,48 @@ public class BatchConfiguration {
     }
 
     @Bean
+    public FlatFileItemReader<GamesDetailsInput> reader4() {
+        return new FlatFileItemReaderBuilder<GamesDetailsInput>()
+                .name("gamesDetailsItemReader")
+                .resource(new ClassPathResource("csv/games_details_updated.csv"))
+                .linesToSkip(1)
+                .delimited()
+                .names(GAMES_DETAILS_FIELD_NAMES)
+                .fieldSetMapper(new BeanWrapperFieldSetMapper<>() {{
+                    setTargetType(GamesDetailsInput.class);
+                }})
+                .build();
+    }
+
+    @Bean
+    public GamesDetailsDataProcessor processor4() {
+        return new GamesDetailsDataProcessor();
+    }
+
+    @Bean
+    public JdbcBatchItemWriter<GamesDetails> writer4(DataSource dataSource) {
+        return new JdbcBatchItemWriterBuilder<GamesDetails>()
+                .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
+                .sql("INSERT INTO games_details (game_id, team_id, team_abbreviation, team_city, player_id, player_name, nickname, start_position, comment, min, fgm, fga, fg_pct, fg3m, fg3a, fg3_pct, ftm, fta, ft_pct, oreb, dreb, reb, ast, stl, blk, turnover, pf, pts, plus_minus)"
+                        + " VALUES (:gameId, :teamId, :teamAbbreviation, :teamCity, :playerId, :playerName, :nickname, :startPosition, :comment, :min, :fgm, :fga, :fgPct, :fg3m, :fg3a, :fg3Pct, :ftm, :fta, :ftPct, :oreb, :dreb, :reb, :ast, :stl, :blk, :to, :pf, :pts, :plusMinus)")
+                .dataSource(dataSource)
+                .build();
+    }
+
+    @Bean
     public Job importUserJob(JobRepository jobRepository,
-                             JobCompletionNotificationListener listener, Step step1, Step step2, Step step3, Step step4) {
+                             JobCompletionNotificationListener listener, Step step1, Step step2, Step step3, Step step4, Step step5) {
         return new JobBuilder("importUserJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .listener(listener)
                 // TODO: run the following steps in parallel
-                .flow(step1)
-                .next(step2)
-                .next(step3)
-                .next(step4)
+                // also try to chunk the fifth step since it takes a minute and a half to run
+//                .flow(step1)
+//                .next(step2)
+//                .next(step3)
+//                .next(step4)
+//                .next(step5)
+                .flow(step5)
                 .end()
                 .build();
     }
@@ -221,6 +256,17 @@ public class BatchConfiguration {
                 .<RankingInput, Ranking> chunk(10, transactionManager)
                 .reader(reader3())
                 .processor(processor3())
+                .writer(writer)
+                .build();
+    }
+
+    @Bean
+    public Step step5(JobRepository jobRepository,
+                      PlatformTransactionManager transactionManager, JdbcBatchItemWriter<GamesDetails> writer) {
+        return new StepBuilder("step5", jobRepository)
+                .<GamesDetailsInput, GamesDetails> chunk(10, transactionManager)
+                .reader(reader4())
+                .processor(processor4())
                 .writer(writer)
                 .build();
     }
