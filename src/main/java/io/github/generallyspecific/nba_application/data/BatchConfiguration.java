@@ -4,10 +4,13 @@ import io.github.generallyspecific.nba_application.data.games.GamesDataProcessor
 import io.github.generallyspecific.nba_application.data.games.GamesInput;
 import io.github.generallyspecific.nba_application.data.players.PlayersDataProcessor;
 import io.github.generallyspecific.nba_application.data.players.PlayersInput;
+import io.github.generallyspecific.nba_application.data.ranking.RankingDataProcessor;
+import io.github.generallyspecific.nba_application.data.ranking.RankingInput;
 import io.github.generallyspecific.nba_application.data.teams.TeamsDataProcessor;
 import io.github.generallyspecific.nba_application.data.teams.TeamsInput;
 import io.github.generallyspecific.nba_application.model.Games;
 import io.github.generallyspecific.nba_application.model.Players;
+import io.github.generallyspecific.nba_application.model.Ranking;
 import io.github.generallyspecific.nba_application.model.Teams;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -28,8 +31,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
-// update this file so that it takes in another CSV file and writes to a different table
-
 @Configuration
 public class BatchConfiguration {
 
@@ -43,6 +44,10 @@ public class BatchConfiguration {
 
     private final String[] TEAMS_FIELD_NAMES = new String[] {
             "team_id", "min_year", "max_year", "abbreviation", "nickname", "year_founded", "city", "arena", "owner", "general_manager", "head_coach"
+    };
+
+    private final String[] RANKING_FIELD_NAMES = new String[] {
+            "teamId", "seasonId", "standingsDate", "conference", "team", "g", "w", "l", "wPct", "homeRecord", "roadRecord"
     };
 
     @Bean
@@ -133,14 +138,45 @@ public class BatchConfiguration {
     }
 
     @Bean
+    public FlatFileItemReader<RankingInput> reader3() {
+        return new FlatFileItemReaderBuilder<RankingInput>()
+                .name("rankingItemReader")
+                .resource(new ClassPathResource("ranking.csv"))
+                .linesToSkip(1)
+                .delimited()
+                .names(RANKING_FIELD_NAMES)
+                .fieldSetMapper(new BeanWrapperFieldSetMapper<>() {{
+                    setTargetType(RankingInput.class);
+                }})
+                .build();
+    }
+
+    @Bean
+    public RankingDataProcessor processor3() {
+        return new RankingDataProcessor();
+    }
+
+    @Bean
+    public JdbcBatchItemWriter<Ranking> writer3(DataSource dataSource) {
+        return new JdbcBatchItemWriterBuilder<Ranking>()
+                .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
+                .sql("INSERT INTO ranking (team_id, season_id, standings_date, conference, team, g, w, l, w_pct, home_record, road_record)"
+                        + " VALUES (:teamId, :seasonId, :standingsDate, :conference, :team, :g, :w, :l, :wPct, :homeRecord, :roadRecord)")
+                .dataSource(dataSource)
+                .build();
+    }
+
+    @Bean
     public Job importUserJob(JobRepository jobRepository,
-                             JobCompletionNotificationListener listener, Step step1, Step step2, Step step3) {
+                             JobCompletionNotificationListener listener, Step step1, Step step2, Step step3, Step step4) {
         return new JobBuilder("importUserJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .listener(listener)
+                // TODO: run the following steps in parallel
                 .flow(step1)
                 .next(step2)
                 .next(step3)
+                .next(step4)
                 .end()
                 .build();
     }
@@ -174,6 +210,17 @@ public class BatchConfiguration {
                 .<TeamsInput, Teams> chunk(10, transactionManager)
                 .reader(reader2())
                 .processor(processor2())
+                .writer(writer)
+                .build();
+    }
+
+    @Bean
+    public Step step4(JobRepository jobRepository,
+                      PlatformTransactionManager transactionManager, JdbcBatchItemWriter<Ranking> writer) {
+        return new StepBuilder("step4", jobRepository)
+                .<RankingInput, Ranking> chunk(10, transactionManager)
+                .reader(reader3())
+                .processor(processor3())
                 .writer(writer)
                 .build();
     }

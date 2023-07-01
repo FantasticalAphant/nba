@@ -2,6 +2,7 @@ package io.github.generallyspecific.nba_application.data;
 
 import io.github.generallyspecific.nba_application.model.Games;
 import io.github.generallyspecific.nba_application.model.Players;
+import io.github.generallyspecific.nba_application.model.Ranking;
 import io.github.generallyspecific.nba_application.model.Teams;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -53,6 +54,14 @@ public class JobCompletionNotificationListener implements JobExecutionListener {
                             rs.getString(2),
                             rs.getString(3))
             ).forEach(team -> log.info("Found <" + team + "> in the database."));
+
+            jdbcTemplate.query("SELECT team_id, season_id, w, l FROM ranking",
+                    (rs, row) -> new Ranking(
+                            Integer.parseInt(rs.getString(1)),
+                            Short.parseShort(rs.getString(2)),
+                            Byte.parseByte(rs.getString(3)),
+                            Byte.parseByte(rs.getString(4)))
+            ).forEach(ranking -> log.info("Found <" + ranking + "> in the database."));
 
         }
     }
