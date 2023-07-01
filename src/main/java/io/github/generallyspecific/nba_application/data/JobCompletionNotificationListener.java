@@ -1,9 +1,6 @@
 package io.github.generallyspecific.nba_application.data;
 
-import io.github.generallyspecific.nba_application.model.Games;
-import io.github.generallyspecific.nba_application.model.Players;
-import io.github.generallyspecific.nba_application.model.Ranking;
-import io.github.generallyspecific.nba_application.model.Teams;
+import io.github.generallyspecific.nba_application.model.*;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 @Component
 public class JobCompletionNotificationListener implements JobExecutionListener {
@@ -63,6 +61,13 @@ public class JobCompletionNotificationListener implements JobExecutionListener {
                             Byte.parseByte(rs.getString(4)))
             ).forEach(ranking -> log.info("Found <" + ranking + "> in the database."));
 
+            jdbcTemplate.query("SELECT game_id, player_id, plus_minus FROM games_details",
+                    (rs, row) -> new String[] {
+                            rs.getString(1),
+                            rs.getString(2),
+                            rs.getString(3)
+                    }
+            ).forEach(games_details -> log.info("Found <" + Arrays.toString(games_details) + "> in the database."));
         }
     }
 }

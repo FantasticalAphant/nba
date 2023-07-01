@@ -72,6 +72,12 @@ public class GamesDetails {
     public GamesDetails() {
     }
 
+    public GamesDetails(int gameId, int playerId, Byte plusMinus) {
+        this.gameId = gameId;
+        this.playerId = playerId;
+        this.plusMinus = plusMinus;
+    }
+
     public GamesDetails(int gameId, int teamId, String teamAbbreviation, String teamCity, int playerId, String playerName, String nickname, Character startPosition, String comment, String min, Byte fgm, Byte fga, Double fgPct, Byte fg3m, Byte fg3a, Double fg3Pct, Byte ftm, Byte fta, Double ftPct, Byte oreb, Byte dreb, Byte reb, Byte ast, Byte stl, Byte blk, Byte to, Byte pf, Byte pts, Byte plusMinus) {
         this.gameId = gameId;
         this.teamId = teamId;

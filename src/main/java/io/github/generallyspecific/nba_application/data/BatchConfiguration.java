@@ -26,6 +26,9 @@ import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.config.Task;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
@@ -199,6 +202,11 @@ public class BatchConfiguration {
     }
 
     @Bean
+    public TaskExecutor taskExecutor() {
+        return new SimpleAsyncTaskExecutor("spring_batch");
+    }
+
+    @Bean
     public Job importUserJob(JobRepository jobRepository,
                              JobCompletionNotificationListener listener, Step step1, Step step2, Step step3, Step step4, Step step5) {
         return new JobBuilder("importUserJob", jobRepository)
@@ -206,12 +214,11 @@ public class BatchConfiguration {
                 .listener(listener)
                 // TODO: run the following steps in parallel
                 // also try to chunk the fifth step since it takes a minute and a half to run
-//                .flow(step1)
-//                .next(step2)
-//                .next(step3)
-//                .next(step4)
-//                .next(step5)
-                .flow(step5)
+                .flow(step1)
+                .next(step2)
+                .next(step3)
+                .next(step4)
+                .next(step5)
                 .end()
                 .build();
     }
@@ -262,12 +269,13 @@ public class BatchConfiguration {
 
     @Bean
     public Step step5(JobRepository jobRepository,
-                      PlatformTransactionManager transactionManager, JdbcBatchItemWriter<GamesDetails> writer) {
+                      PlatformTransactionManager transactionManager, JdbcBatchItemWriter<GamesDetails> writer, TaskExecutor taskExecutor) {
         return new StepBuilder("step5", jobRepository)
                 .<GamesDetailsInput, GamesDetails> chunk(10, transactionManager)
                 .reader(reader4())
                 .processor(processor4())
                 .writer(writer)
+                .taskExecutor(taskExecutor)
                 .build();
     }
 
