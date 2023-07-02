@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name="ranking")
+@IdClass(RankingIdKey.class)
 public class Ranking {
     @Id
     @Column(name="team_id")
