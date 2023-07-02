@@ -7,15 +7,19 @@ import jakarta.persistence.*;
 @IdClass(PlayersIdKey.class)
 public class Players {
 
+    @Column(name="player_name")
     private String playerName;
 
     @Id
+    @Column(name="team_id")
     private int teamId;
 
     @Id
+    @Column(name="player_id")
     private int playerId;
 
     @Id
+    @Column(name="season")
     private int season;
 
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -63,6 +67,10 @@ public class Players {
     }
 
     public Players() {
+    }
+
+    public Players(String playerName) {
+        this.playerName = playerName;
     }
 
     public Players(String playerName, int teamId, int playerId, int season) {
