@@ -9,7 +9,7 @@ public class TeamsDataProcessor implements ItemProcessor<TeamsInput, Teams> {
     public Teams process(final TeamsInput teamsInput) throws Exception {
         Teams team = new Teams();
 
-        team.setTeamId(teamsInput.getTeam_id());
+        team.setTeamId(Long.parseLong(teamsInput.getTeam_id()));
         team.setMinYear(Integer.parseInt(teamsInput.getMin_year()));
         team.setMaxYear(Integer.parseInt(teamsInput.getMax_year()));
         team.setAbbreviation(teamsInput.getAbbreviation());

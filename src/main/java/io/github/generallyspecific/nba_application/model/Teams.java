@@ -8,7 +8,7 @@ public class Teams {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="team_id")
-    private String teamId;
+    private long teamId;
     @Column(name="min_year")
     private int minYear;
     @Column(name="max_year")
@@ -33,13 +33,13 @@ public class Teams {
     public Teams() {
     }
 
-    public Teams(String team_id, String nickname, String city) {
+    public Teams(long team_id, String nickname, String city) {
         this.teamId = team_id;
         this.nickname = nickname;
         this.city = city;
     }
 
-    public Teams(String teamId, int minYear, int maxYear, String abbreviation, String nickname, int yearFounded, String city, String arena, String owner, String generalManager, String headCoach) {
+    public Teams(long teamId, int minYear, int maxYear, String abbreviation, String nickname, int yearFounded, String city, String arena, String owner, String generalManager, String headCoach) {
         this.teamId = teamId;
         this.minYear = minYear;
         this.maxYear = maxYear;
@@ -53,11 +53,11 @@ public class Teams {
         this.headCoach = headCoach;
     }
 
-    public String getTeamId() {
+    public long getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(String teamId) {
+    public void setTeamId(long teamId) {
         this.teamId = teamId;
     }
 
