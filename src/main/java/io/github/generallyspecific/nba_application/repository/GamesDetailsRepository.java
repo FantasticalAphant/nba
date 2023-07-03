@@ -13,4 +13,8 @@ import java.util.List;
 public interface GamesDetailsRepository extends JpaRepository<GamesDetails, GamesDetailsIdKey> {
     @Query("SELECT gd FROM GamesDetails gd JOIN Players p ON gd.playerId = p.playerId WHERE p.playerName = :playerName")
     List<GamesDetails> getPlayerGameDetails(@Param("playerName") String playerName);
+
+    default List<GamesDetails> findLatestGamesDetailsByPlayerName(String playerName) {
+        return getPlayerGameDetails(playerName);
+    }
 }
