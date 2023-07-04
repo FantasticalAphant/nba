@@ -2,6 +2,7 @@ package io.github.generallyspecific.nba_application.controller;
 
 import io.github.generallyspecific.nba_application.model.Ranking;
 import io.github.generallyspecific.nba_application.repository.RankingRepository;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins="http://localhost:3000")
 public class RankingController {
     private RankingRepository rankingRepository;
 
