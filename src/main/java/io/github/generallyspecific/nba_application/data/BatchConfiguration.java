@@ -215,8 +215,6 @@ public class BatchConfiguration {
         return new JobBuilder("importUserJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .listener(listener)
-                // TODO: run the following steps in parallel
-                // also try to chunk the fifth step since it takes a minute and a half to run
                 .flow(step1)
                 .next(step2)
                 .next(step3)
@@ -230,7 +228,7 @@ public class BatchConfiguration {
     public Step step1(JobRepository jobRepository,
                       PlatformTransactionManager transactionManager, JdbcBatchItemWriter<Players> writer) {
         return new StepBuilder("step1", jobRepository)
-                .<PlayersInput, Players> chunk(10, transactionManager)
+                .<PlayersInput, Players> chunk(100, transactionManager)
                 .reader(reader1())
                 .processor(processor1())
                 .writer(writer)
@@ -241,7 +239,7 @@ public class BatchConfiguration {
     public Step step2(JobRepository jobRepository,
                       PlatformTransactionManager transactionManager, JdbcBatchItemWriter<Games> writer) {
         return new StepBuilder("step2", jobRepository)
-                .<GamesInput, Games> chunk(10, transactionManager)
+                .<GamesInput, Games> chunk(100, transactionManager)
                 .reader(reader())
                 .processor(processor())
                 .writer(writer)
@@ -252,7 +250,7 @@ public class BatchConfiguration {
     public Step step3(JobRepository jobRepository,
                       PlatformTransactionManager transactionManager, JdbcBatchItemWriter<Teams> writer) {
         return new StepBuilder("step3", jobRepository)
-                .<TeamsInput, Teams> chunk(10, transactionManager)
+                .<TeamsInput, Teams> chunk(100, transactionManager)
                 .reader(reader2())
                 .processor(processor2())
                 .writer(writer)
@@ -263,7 +261,7 @@ public class BatchConfiguration {
     public Step step4(JobRepository jobRepository,
                       PlatformTransactionManager transactionManager, JdbcBatchItemWriter<Ranking> writer) {
         return new StepBuilder("step4", jobRepository)
-                .<RankingInput, Ranking> chunk(10, transactionManager)
+                .<RankingInput, Ranking> chunk(200, transactionManager)
                 .reader(reader3())
                 .processor(processor3())
                 .writer(writer)
@@ -274,7 +272,7 @@ public class BatchConfiguration {
     public Step step5(JobRepository jobRepository,
                       PlatformTransactionManager transactionManager, JdbcBatchItemWriter<GamesDetails> writer, TaskExecutor taskExecutor) {
         return new StepBuilder("step5", jobRepository)
-                .<GamesDetailsInput, GamesDetails> chunk(10, transactionManager)
+                .<GamesDetailsInput, GamesDetails> chunk(200, transactionManager)
                 .reader(reader4())
                 .processor(processor4())
                 .writer(writer)

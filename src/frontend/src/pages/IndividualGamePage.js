@@ -19,6 +19,9 @@ export const IndividualGamePage = () => {
     return (
         <div className={"IndividualGamePage"}>
             <h2>{game.gameDateEST}</h2>
+            <h3>Final Score</h3>
+            <h3>{game.homeTeamID} vs {game.visitorTeamID}</h3>
+            <h3>{game.ptsHome} : {game.ptsAway}</h3>
         </div>
     );
 }
