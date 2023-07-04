@@ -23,4 +23,10 @@ public class GamesController {
     public List<Games> getGamesByDate(@PathVariable LocalDate date) {
         return gamesRepository.findGamesByGameDateEST(date);
     }
+
+    @GetMapping("/game/{gameId}")
+    public Games getGameByGameId(@PathVariable int gameId) {
+        return gamesRepository.findGameByGameID(gameId);
+    }
+
 }

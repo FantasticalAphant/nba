@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface GamesRepository extends JpaRepository<Games, Integer> {
     List<Games> findGamesByGameDateEST(LocalDate date);
+
+    Games findGameByGameID(int gameId);
 }

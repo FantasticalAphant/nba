@@ -20,7 +20,6 @@ public class GamesDetailsController {
 
     @GetMapping("/gamesdetails/{playerName}")
     public List<GamesDetails> getGamesDetailsByPlayerName(@PathVariable String playerName) {
-        // pageable handled in the service (not sure if this is the best way to do it)
         return this.gamesDetailsRepository.findLatestGamesDetailsByPlayerName(playerName);
     }
 }

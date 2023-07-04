@@ -8,12 +8,12 @@ export const GamesPage = () => {
 
     useEffect(
         () => {
-            const fetchGames = async () => {
+            const fetchGamesByDate = async () => {
                 const response = await fetch(`http://localhost:8080/games/${date}`);
                 const data = await response.json();
                 setGames(data);
             };
-            fetchGames();
+            fetchGamesByDate();
         }, [date]
     )
 
