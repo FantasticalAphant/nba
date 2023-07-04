@@ -1,4 +1,4 @@
-package io.github.generallyspecific.nba_application.model;
+package io.github.generallyspecific.nba_application.model.gamesdetails;
 
 import jakarta.persistence.*;
 

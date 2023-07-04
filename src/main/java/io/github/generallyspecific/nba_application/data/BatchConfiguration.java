@@ -10,7 +10,11 @@ import io.github.generallyspecific.nba_application.data.ranking.RankingDataProce
 import io.github.generallyspecific.nba_application.data.ranking.RankingInput;
 import io.github.generallyspecific.nba_application.data.teams.TeamsDataProcessor;
 import io.github.generallyspecific.nba_application.data.teams.TeamsInput;
-import io.github.generallyspecific.nba_application.model.*;
+import io.github.generallyspecific.nba_application.model.games.Games;
+import io.github.generallyspecific.nba_application.model.gamesdetails.GamesDetails;
+import io.github.generallyspecific.nba_application.model.players.Players;
+import io.github.generallyspecific.nba_application.model.ranking.Ranking;
+import io.github.generallyspecific.nba_application.model.teams.Teams;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
@@ -28,7 +32,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
-import org.springframework.scheduling.config.Task;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;

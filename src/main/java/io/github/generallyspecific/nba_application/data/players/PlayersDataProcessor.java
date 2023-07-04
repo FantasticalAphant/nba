@@ -1,6 +1,6 @@
 package io.github.generallyspecific.nba_application.data.players;
 
-import io.github.generallyspecific.nba_application.model.Players;
+import io.github.generallyspecific.nba_application.model.players.Players;
 import org.springframework.batch.item.ItemProcessor;
 
 public class PlayersDataProcessor implements ItemProcessor<PlayersInput, Players> {

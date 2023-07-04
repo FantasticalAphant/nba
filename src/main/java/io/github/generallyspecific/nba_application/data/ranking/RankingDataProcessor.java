@@ -1,6 +1,6 @@
 package io.github.generallyspecific.nba_application.data.ranking;
 
-import io.github.generallyspecific.nba_application.model.Ranking;
+import io.github.generallyspecific.nba_application.model.ranking.Ranking;
 import org.springframework.batch.item.ItemProcessor;
 
 import java.time.LocalDate;

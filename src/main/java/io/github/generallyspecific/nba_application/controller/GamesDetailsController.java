@@ -1,6 +1,6 @@
 package io.github.generallyspecific.nba_application.controller;
 
-import io.github.generallyspecific.nba_application.model.GamesDetails;
+import io.github.generallyspecific.nba_application.model.gamesdetails.GamesDetails;
 import io.github.generallyspecific.nba_application.repository.GamesDetailsRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

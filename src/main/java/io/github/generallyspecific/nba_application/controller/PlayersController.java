@@ -1,6 +1,6 @@
 package io.github.generallyspecific.nba_application.controller;
 
-import io.github.generallyspecific.nba_application.model.Players;
+import io.github.generallyspecific.nba_application.model.players.Players;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,6 +1,6 @@
 package io.github.generallyspecific.nba_application.data.games;
 
-import io.github.generallyspecific.nba_application.model.Games;
+import io.github.generallyspecific.nba_application.model.games.Games;
 import org.springframework.batch.item.ItemProcessor;
 
 import java.time.LocalDate;

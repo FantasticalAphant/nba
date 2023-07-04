@@ -1,7 +1,7 @@
 package io.github.generallyspecific.nba_application.repository;
 
-import io.github.generallyspecific.nba_application.model.Players;
-import io.github.generallyspecific.nba_application.model.PlayersIdKey;
+import io.github.generallyspecific.nba_application.model.players.Players;
+import io.github.generallyspecific.nba_application.model.players.PlayersIdKey;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
