@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="games")
+@Table(name="games", indexes = {
+        @Index(name="idx_games_game_date_est", columnList = "game_date_est"),
+})
 public class Games {
 
     @Column(name="game_date_est")
