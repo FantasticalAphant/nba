@@ -17,6 +17,11 @@ public class TeamsController {
         this.teamsRepository = teamsRepository;
     }
 
+    @GetMapping("/teams")
+    public Iterable<Teams> getAllTeams() {
+        return this.teamsRepository.findAll();
+    }
+
     @GetMapping("/team/{name}")
     public Teams getTeam(@PathVariable String name) {
         return this.teamsRepository.findTeamsByNickname(StringUtils.capitalize(name));

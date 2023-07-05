@@ -4,6 +4,7 @@ import {PlayersPage} from "./pages/PlayersPage";
 import {TeamsPage} from "./pages/TeamsPage";
 import {GamesPage} from "./pages/GamesPage";
 import {IndividualGamePage} from "./pages/IndividualGamePage";
+import {HomePage} from "./pages/HomePage";
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                     <Route path={"/team/:teamName"} element={<TeamsPage/>}/>
                     <Route path={"/games/:date"} element={<GamesPage/>}/>
                     <Route path={"/game/:gameId"} element={<IndividualGamePage/>}/>
+                    <Route path={"/"} element={<HomePage/>}/>
                 </Routes>
             </Router>
         </div>
