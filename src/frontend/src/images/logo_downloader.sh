@@ -60,7 +60,7 @@ names=(
   "magic"
   "76ers"
   "suns"
-  "blazers"
+  "trail blazers"
   "kings"
   "spurs"
   "raptors"
