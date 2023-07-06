@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TeamsRepository extends JpaRepository<Teams, Long> {
     Teams findTeamsByNickname(String nickname);
+    Teams findTeamsByTeamId(long teamId);
 }

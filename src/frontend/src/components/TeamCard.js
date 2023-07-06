@@ -1,3 +1,5 @@
+// Component displaying logo and name of a team (used on the home page)
+
 import {styled} from "styled-components";
 import {Link} from "react-router-dom";
 import logos from "../images/importLogos";
@@ -38,7 +40,7 @@ export const TeamCard = ({team}) => {
             <Container>
             <Image src={`${logos[team.nickname.toLowerCase()]}`} alt={`${team.nickname} logo`}/>
             </Container>
-            <Link to={`/team/${team.nickname}`}>
+            <Link to={`/team/id/${team.teamId}`}>  {/* Links to TeamsPage.js */}
                 <Card>
                     {team.city} {team.nickname} ({team.abbreviation})
                 </Card>

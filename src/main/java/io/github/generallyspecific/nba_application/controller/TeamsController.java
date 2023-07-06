@@ -26,4 +26,9 @@ public class TeamsController {
     public Teams getTeam(@PathVariable String name) {
         return this.teamsRepository.findTeamsByNickname(StringUtils.capitalize(name));
     }
+
+    @GetMapping("/team/id/{id}")
+    public Teams getTeamById(@PathVariable int id) {
+        return this.teamsRepository.findTeamsByTeamId(id);
+    }
 }

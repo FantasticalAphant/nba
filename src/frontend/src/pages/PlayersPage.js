@@ -30,7 +30,7 @@ export const PlayersPage = () => {
             <h3>{players.playerName}</h3>
             <h3>
                 {/*this operation is pretty slow though (db bottleneck)*/}
-                {gamesDetails.slice(1, 5).map((game, i) => <GamesSmallCard game={game} key={i}/>)}
+                {gamesDetails.slice(0, 5).map((game, i) => <GamesSmallCard game={game} key={i}/>)}
             </h3>
         </div>
     );

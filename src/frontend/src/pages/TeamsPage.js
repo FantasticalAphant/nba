@@ -1,26 +1,43 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
+import {TeamStatsCard} from "../components/TeamStatsCard";
 
 export const TeamsPage = () => {
-    const [teams, setTeams] = useState([]);
-    const {teamName} = useParams();
+    const [team, setTeam] = useState([]);
+    const {teamId} = useParams();
 
     useEffect(
         () => {
             const fetchTeam = async () => {
-                const response = await fetch(`http://localhost:8080/team/${teamName}`);
+                const response = await fetch(`http://localhost:8080/team/id/${teamId}`);
                 const data = await response.json();
-                setTeams(data);
+                setTeam(data);
             };
             fetchTeam();
-        }, [teamName]
+        }, [teamId]
     )
 
-    if (!teams) return null;
+    const [games, setGames] = useState([]);
+    useEffect(
+        () => {
+            const fetchGames = async () => {
+                const response = await fetch(`http://localhost:8080/games/team/${teamId}`);
+                const data = await response.json();
+                setGames(data);
+            };
+            fetchGames();
+        }, [teamId]
+    )
+
+    // also print out the latest couple of games
+    // also print out the players and ranking for a specified year
+    if (!team) return null;
+    if (!games) return null;
 
     return (
         <div className={"TeamsPage"}>
-            <h3>{teams.city} {teams.nickname}</h3>
+            <h3>{team.city} {team.nickname} ({team.abbreviation})</h3>
+            {games.slice(0, 5).map((game, i) => <TeamStatsCard game={game} key={i}/>)}
         </div>
     );
 }

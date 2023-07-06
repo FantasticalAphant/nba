@@ -1,3 +1,5 @@
+// Home page displaying all teams
+
 import {useEffect, useState} from "react";
 import {TeamCard} from "../components/TeamCard";
 import {styled} from "styled-components";

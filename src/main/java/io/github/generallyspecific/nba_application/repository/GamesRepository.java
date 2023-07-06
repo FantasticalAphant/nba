@@ -10,4 +10,6 @@ public interface GamesRepository extends JpaRepository<Games, Integer> {
     List<Games> findGamesByGameDateEST(LocalDate date);
 
     Games findGameByGameID(int gameId);
+
+    List<Games> findGamesByHomeTeamIDOrVisitorTeamID(int homeTeamId, int visitorTeamId);
 }
