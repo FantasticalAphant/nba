@@ -1,3 +1,5 @@
+// Displays basic information about a game
+
 export const GamesInfoCard = ({game}) => {
     if (!game) return null;
     return (

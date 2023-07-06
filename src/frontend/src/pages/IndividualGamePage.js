@@ -1,3 +1,5 @@
+// Page displaying information for a specific game given a game ID
+
 import {useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
 

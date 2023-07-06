@@ -1,3 +1,5 @@
+// Component displaying a player's stats for a specific game
+
 import {Link} from "react-router-dom";
 
 export const GamesSmallCard = ({game}) => {

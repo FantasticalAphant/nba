@@ -1,3 +1,5 @@
+// Page displaying information about a specific team
+
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {TeamStatsCard} from "../components/TeamStatsCard";

@@ -1,3 +1,5 @@
+// Function used to import all logos from the logos folder
+
 function importAll(r) {
     let images = {};
     r.keys().forEach((item, index) => {

@@ -1,3 +1,5 @@
+// Component displaying team stats for a specific game
+
 function roundToTwo(num) {
     return +(Math.round(num + "e+2")  + "e-2");
 }

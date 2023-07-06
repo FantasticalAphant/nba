@@ -1,3 +1,4 @@
+// Page displaying information for a specific player and some of their games
 import {useEffect, useState} from "react";
 import {GamesSmallCard} from "../components/GamesSmallCard";
 import {useParams} from "react-router-dom";

@@ -1,3 +1,5 @@
+// Page displaying all games for a specific date
+
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {GamesInfoCard} from "../components/GamesInfoCard";
