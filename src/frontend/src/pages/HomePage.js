@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {TeamCard} from "../components/TeamCard";
 import {styled} from "styled-components";
 
-const Layout = styled.div`
+const TeamLayout = styled.div`
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 20px;
@@ -23,8 +23,11 @@ export const HomePage = () => {
     )
 
     return (
-        <Layout>
-            {teams.map((team, i) => <TeamCard team={team} key={i}/>)}
-        </Layout>
+        <div>
+            <h1>NBA Information Board</h1>
+            <TeamLayout>
+                {teams.map((team, i) => <TeamCard team={team} key={i}/>)}
+            </TeamLayout>
+        </div>
     );
 }
