@@ -7,7 +7,7 @@ export const GamesSmallCard = ({game}) => {
 
     return (
         <div className={"GamesSmallCard"}>
-            <h3><Link to={`/game/${game.gameId}`}>Scoreline: {game.pts}/{game.reb}/{game.ast}</Link></h3>
+            <h3><Link to={`/gamesdetails/game/${game.gameId}`}>MIN: {game.min} | PTS: {game.pts} | REB: {game.reb} | AST: {game.ast} | +/-: {game.plusMinus}</Link></h3>
         </div>
     );
 }

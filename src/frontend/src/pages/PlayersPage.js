@@ -27,11 +27,10 @@ export const PlayersPage = () => {
 
     return (
         <div className={"PlayersPage"}>
-            <h1>NBA</h1>
-            <h3>{players.playerName}</h3>
+            <h1>{players.playerName}</h1>
             <h3>
                 {/*this operation is pretty slow though (db bottleneck)*/}
-                {gamesDetails.slice(0, 5).map((game, i) => <GamesSmallCard game={game} key={i}/>)}
+                {gamesDetails.slice(0, 10).map((game, i) => <GamesSmallCard game={game} key={i}/>)}
             </h3>
         </div>
     );
