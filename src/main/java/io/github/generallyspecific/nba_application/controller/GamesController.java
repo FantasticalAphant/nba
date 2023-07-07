@@ -31,6 +31,6 @@ public class GamesController {
 
     @GetMapping("games/team/{teamId}")
     public List<Games> getGamesById(@PathVariable int teamId) {
-        return gamesRepository.findGamesByHomeTeamIDOrVisitorTeamID(teamId, teamId);
+        return gamesRepository.findGamesByHomeTeamIDOrVisitorTeamIDOrderByGameDateESTDesc(teamId, teamId);
     }
 }

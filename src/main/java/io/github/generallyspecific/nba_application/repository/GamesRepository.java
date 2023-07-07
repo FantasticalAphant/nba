@@ -11,5 +11,5 @@ public interface GamesRepository extends JpaRepository<Games, Integer> {
 
     Games findGameByGameID(int gameId);
 
-    List<Games> findGamesByHomeTeamIDOrVisitorTeamID(int homeTeamId, int visitorTeamId);
+    List<Games> findGamesByHomeTeamIDOrVisitorTeamIDOrderByGameDateESTDesc(int homeTeamId, int visitorTeamId);
 }
