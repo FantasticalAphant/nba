@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface GamesDetailsRepository extends JpaRepository<GamesDetails, GamesDetailsIdKey> {
-    @Query("SELECT gd FROM GamesDetails gd JOIN Players p ON gd.playerId = p.playerId WHERE p.playerName = :playerName")
+    @Query("SELECT gd FROM GamesDetails gd JOIN Players p ON gd.playerId = p.playerId WHERE p.playerName = :playerName ORDER BY gd.gameId DESC")
     List<GamesDetails> getPlayerGameDetails(@Param("playerName") String playerName);
 
     List<GamesDetails> getGamesDetailsByGameId(int gameId);
