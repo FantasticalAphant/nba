@@ -1,6 +1,7 @@
 // Component displaying team stats for a specific game
 
 import {styled} from "styled-components";
+import {Link} from "react-router-dom";
 
 const Card = styled.div`
   display: inline-block;
@@ -18,7 +19,7 @@ function roundToTwo(num) {
 export const TeamStatsCard = ({game}) => {
     return (
         <Card className={"TeamStatsCard"}>
-            <h3>Game ID: {game.gameID}</h3>
+            <h3>Game ID: <Link to={`/gamesdetails/game/${game.gameID}`}>{game.gameID}</Link></h3>
             <h2>Home: {game.ptsHome}; FG%: {roundToTwo(game.fgPctHome)}; FT%: {roundToTwo(game.ftPctHome)}; 3FG%: {roundToTwo(game.fg3PctHome)} </h2>
             <h2>Away: {game.ptsAway}; FG%: {roundToTwo(game.fgPctAway)}; FT%: {roundToTwo(game.ftPctAway)}; 3FG%: {roundToTwo(game.fg3PctAway)} </h2>
         </Card>

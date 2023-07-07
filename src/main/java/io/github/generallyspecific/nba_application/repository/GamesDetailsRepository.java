@@ -14,6 +14,8 @@ public interface GamesDetailsRepository extends JpaRepository<GamesDetails, Game
     @Query("SELECT gd FROM GamesDetails gd JOIN Players p ON gd.playerId = p.playerId WHERE p.playerName = :playerName")
     List<GamesDetails> getPlayerGameDetails(@Param("playerName") String playerName);
 
+    List<GamesDetails> getGamesDetailsByGameId(int gameId);
+
     default List<GamesDetails> findLatestGamesDetailsByPlayerName(String playerName) {
         return getPlayerGameDetails(playerName);
     }

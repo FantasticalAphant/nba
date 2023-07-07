@@ -12,7 +12,7 @@ const PageLayout = styled.div`
 `;
 
 const TeamName = styled.h1`
-    font: 1.5em;
+    font-size: 2em;
 `;
 
 export const TeamsPage = () => {
@@ -46,6 +46,8 @@ export const TeamsPage = () => {
     // also print out the players and ranking for a specified year
     if (!team) return null;
     if (!games) return null;
+
+    // TODO: implement paging
 
     return (
         <PageLayout className={"TeamsPage"}>

@@ -2,6 +2,15 @@
 
 import {useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
+import {styled} from "styled-components";
+
+const Layout = styled.div`
+  display: grid;
+`;
+
+const Card = styled.h3`
+  border: papayawhip solid 1px;
+`;
 
 export const IndividualGamePage = () => {
     const [game, setGame] = useState([]);
@@ -10,7 +19,7 @@ export const IndividualGamePage = () => {
     useEffect(
         () => {
             const fetchGameById = async () => {
-                const response = await fetch(`http://localhost:8080/game/${gameId}`);
+                const response = await fetch(`http://localhost:8080/gamesdetails/game/${gameId}`);
                 const data = await response.json();
                 setGame(data);
             };
@@ -19,11 +28,12 @@ export const IndividualGamePage = () => {
     )
 
     return (
-        <div className={"IndividualGamePage"}>
-            <h2>{game.gameDateEST}</h2>
-            <h3>Final Score</h3>
-            <h3>{game.homeTeamID} vs {game.visitorTeamID}</h3>
-            <h3>{game.ptsHome} : {game.ptsAway}</h3>
-        </div>
+        <Layout>
+            {game.map((game, i) => (
+                <Card>
+                    {game.playerName} ({game.teamAbbreviation}) - MIN: {game.min} | PTS: {game.pts} | {game.fgm}/{game.fga} FG | REB: {game.reb} | AST: {game.ast} | +/-: {game.plusMinus}
+                </Card>
+            ))}
+        </Layout>
     );
 }
