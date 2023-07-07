@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import io.github.generallyspecific.nba_application.repository.PlayersRepository;
 
+import java.util.List;
+
 // maybe use @RequestMapping to set the base path
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
@@ -32,5 +34,10 @@ public class PlayersController {
     }
 
     // add method to get all players from a specific team in a specific season
+    // TODO: maybe use a query instead of path parameter for season
+    @GetMapping("/players/{teamId}/{season}")
+    List<Players> findByTeamIdAndSeason(@PathVariable int teamId, @PathVariable int season) {
+        return this.playersRepository.findByTeamIdAndSeason(teamId, season);
+    }
 
 }

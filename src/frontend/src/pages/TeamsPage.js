@@ -1,7 +1,7 @@
 // Page displaying information about a specific team
 
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {TeamStatsCard} from "../components/TeamStatsCard";
 import {styled} from "styled-components";
 
@@ -11,8 +11,9 @@ const PageLayout = styled.div`
     grid-gap: 20px;
 `;
 
+
 const TeamName = styled.h1`
-    font-size: 2em;
+    font-size: 3em;
 `;
 
 export const TeamsPage = () => {
@@ -42,19 +43,41 @@ export const TeamsPage = () => {
         }, [teamId]
     )
 
+    const [players, setPlayers] = useState([]);
+    useEffect(
+        () => {
+            const fetchPlayers = async () => {
+                const response = await fetch(`http://localhost:8080/players/${teamId}/2019`);
+                const data = await response.json();
+                setPlayers(data);
+            };
+            fetchPlayers();
+        }, [teamId]
+    )
+
     // also print out the latest couple of games
     // also print out the players and ranking for a specified year
     if (!team) return null;
     if (!games) return null;
+    if (!players) return null;
 
     // TODO: implement paging
 
     return (
-        <PageLayout className={"TeamsPage"}>
+        <div>
             <TeamName>{team.city} {team.nickname} ({team.abbreviation})</TeamName>
-            <div>
-                {games.slice(0, 5).map((game, i) => <TeamStatsCard game={game} key={i}/>)}
-            </div>
-        </PageLayout>
+            <PageLayout>
+                <div>
+                    {/*FIXME: update player spreadsheet to include rosters from 2019-2022*/}
+                    <h1>Roster:</h1>
+                    {players.map((player, i) => <h3><Link to={`/player/${player.playerName}`}>{player.playerName}</Link></h3>)}
+                </div>
+
+                <div>
+                    <h1>Latest Games:</h1>
+                    {games.slice(0, 5).map((game, i) => <TeamStatsCard game={game} key={i}/>)}
+                </div>
+            </PageLayout>
+        </div>
     );
 }

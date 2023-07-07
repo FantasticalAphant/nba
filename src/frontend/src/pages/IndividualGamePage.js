@@ -27,10 +27,16 @@ export const IndividualGamePage = () => {
         }, [gameId]
     )
 
+    // TODO: group by team
+    // TODO: add a link to the team page
+    // TODO: display team names on the top
+    // TODO: for each team, group by some order with those not playing at the bottom
+
     return (
         <Layout>
             {game.map((game, i) => (
                 <Card>
+                    {/*FIXME: for some reason, minutes are returning negative values*/}
                     {game.playerName} ({game.teamAbbreviation}) - MIN: {game.min} | PTS: {game.pts} | {game.fgm}/{game.fga} FG | REB: {game.reb} | AST: {game.ast} | +/-: {game.plusMinus}
                 </Card>
             ))}

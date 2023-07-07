@@ -11,4 +11,7 @@ import java.util.List;
 public interface PlayersRepository extends JpaRepository<Players, PlayersIdKey> {
     // could potentially return multiple players with the same name
     List<Players> findByPlayerName(String playerName);
+
+    // players list only goes up to 2019 season
+    List<Players> findByTeamIdAndSeason(int teamId, int season);
 }
