@@ -3,6 +3,17 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {TeamStatsCard} from "../components/TeamStatsCard";
+import {styled} from "styled-components";
+
+const PageLayout = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+`;
+
+const TeamName = styled.h1`
+    font: 1.5em;
+`;
 
 export const TeamsPage = () => {
     const [team, setTeam] = useState([]);
@@ -37,9 +48,11 @@ export const TeamsPage = () => {
     if (!games) return null;
 
     return (
-        <div className={"TeamsPage"}>
-            <h3>{team.city} {team.nickname} ({team.abbreviation})</h3>
-            {games.slice(0, 5).map((game, i) => <TeamStatsCard game={game} key={i}/>)}
-        </div>
+        <PageLayout className={"TeamsPage"}>
+            <TeamName>{team.city} {team.nickname} ({team.abbreviation})</TeamName>
+            <div>
+                {games.slice(0, 5).map((game, i) => <TeamStatsCard game={game} key={i}/>)}
+            </div>
+        </PageLayout>
     );
 }
