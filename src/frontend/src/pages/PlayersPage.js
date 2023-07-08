@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {GamesSmallCard} from "../components/GamesSmallCard";
 import {useParams} from "react-router-dom";
 import {Pagination} from "../components/Pagination";
+import {styled} from "styled-components";
 
 export const PlayersPage = () => {
     const [players, setPlayers] = useState([]);
@@ -12,7 +13,7 @@ export const PlayersPage = () => {
     const [games, setGames] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [gamesPerPage] = useState(25);
+    const [gamesPerPage] = useState(50);
 
     useEffect(() => {
         const fetchGames = async () => {
@@ -52,11 +53,11 @@ export const PlayersPage = () => {
     return (
         <div className={"PlayersPage"}>
             <h1>{players["playerName"]}</h1>
+            {/*this operation is pretty slow though (db bottleneck)*/}
             <h3>
-                {/*this operation is pretty slow though (db bottleneck)*/}
                 <GamesSmallCard games={currentGames} loading={loading}></GamesSmallCard>
-                <Pagination gamesPerPage={gamesPerPage} totalGames={games.length} paginate={paginate}></Pagination>
             </h3>
+            <Pagination gamesPerPage={gamesPerPage} totalGames={games.length} paginate={paginate}></Pagination>
         </div>
     );
 }

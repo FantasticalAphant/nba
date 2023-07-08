@@ -3,7 +3,9 @@ import {styled} from "styled-components";
 import {Link} from "react-router-dom";
 
 const Ul = styled.ul`
-    list-style-type: none;
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 `;
 
 export const GamesSmallCard = ({games, loading}) => {
