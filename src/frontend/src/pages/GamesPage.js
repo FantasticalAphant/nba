@@ -3,6 +3,7 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {GamesInfoCard} from "../components/GamesInfoCard";
+import {NavigationBar} from "../components/NavigationBar";
 
 export const GamesPage = () => {
     const [games, setGames] = useState([]);
@@ -23,6 +24,7 @@ export const GamesPage = () => {
 
     return (
         <div className={"GamesPage"}>
+            <NavigationBar />
             <h1>{date}</h1>
             {games.map((game, i) => <GamesInfoCard game={game} key={i}/>)}
         </div>

@@ -3,14 +3,15 @@
 import {useEffect, useState} from "react";
 import {TeamCard} from "../components/TeamCard";
 import {styled} from "styled-components";
+import {NavigationBar} from "../components/NavigationBar";
 
 const Page = styled.div`
 `;
 
 const TeamLayout = styled.div`
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 20px;
 `;
 
 export const HomePage = () => {
@@ -29,7 +30,7 @@ export const HomePage = () => {
 
     return (
         <Page>
-            <h1>NBA Information Board</h1>
+            <NavigationBar />
             <TeamLayout>
                 {teams.map((team, i) => <TeamCard team={team} key={i}/>)}
             </TeamLayout>

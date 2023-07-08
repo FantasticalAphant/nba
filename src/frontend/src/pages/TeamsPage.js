@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
 import {TeamStatsCard} from "../components/TeamStatsCard";
 import {styled} from "styled-components";
+import {NavigationBar} from "../components/NavigationBar";
 
 const PageLayout = styled.div`
   display: grid;
@@ -70,6 +71,7 @@ export const TeamsPage = () => {
 
     return (
         <div>
+            <NavigationBar />
             <TeamName>{team.city} {team.nickname} ({team.abbreviation})</TeamName>
             <PageLayout>
                 <RosterLayout>

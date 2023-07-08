@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {GamesSmallCard} from "../components/GamesSmallCard";
 import {useParams} from "react-router-dom";
 import {Pagination} from "../components/Pagination";
-import {styled} from "styled-components";
+import {NavigationBar} from "../components/NavigationBar";
 
 export const PlayersPage = () => {
     const [players, setPlayers] = useState([]);
@@ -52,6 +52,7 @@ export const PlayersPage = () => {
 
     return (
         <div className={"PlayersPage"}>
+            <NavigationBar />
             <h1>{players["playerName"]}</h1>
             {/*this operation is pretty slow though (db bottleneck)*/}
             <h3>

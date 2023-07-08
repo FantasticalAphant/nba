@@ -3,6 +3,7 @@
 import {useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
 import {styled} from "styled-components";
+import {NavigationBar} from "../components/NavigationBar";
 
 const Layout = styled.div`
   display: grid;
@@ -34,6 +35,7 @@ export const IndividualGamePage = () => {
 
     return (
         <Layout>
+            <NavigationBar />
             {game.map((game, i) => (
                 <Card>
                     {/*FIXME: for some reason, minutes are returning negative values*/}
