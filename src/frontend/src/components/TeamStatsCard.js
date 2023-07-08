@@ -5,7 +5,8 @@ import {Link} from "react-router-dom";
 
 const Card = styled.div`
   display: inline-block;
-  border: black solid 1px;
+  border: black solid 5px;
+  border-radius: 10px;
   padding: 5px;
   margin-bottom: 10px;
 `;

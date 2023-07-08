@@ -29,14 +29,15 @@ const CardContainer = styled.div`
   display: flex;
   justify-content: center;
   align-self: center;
-  border: black solid 1px;
+  border: black solid 2px;
+  border-radius: 5px;
 `;
 
 export const TeamCard = ({team}) => {
     if (!team) return null;
 
     return (
-        <CardContainer className={"GamesSmallCard"}>
+        <CardContainer>
             <Container>
             <Image src={`${logos[team.nickname.toLowerCase()]}`} alt={`${team.nickname} logo`}/>
             </Container>

@@ -6,14 +6,19 @@ import {TeamStatsCard} from "../components/TeamStatsCard";
 import {styled} from "styled-components";
 
 const PageLayout = styled.div`
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
 `;
 
+const RosterLayout = styled.div`
+`;
+
+const GamesLayout = styled.div`
+`;
 
 const TeamName = styled.h1`
-    font-size: 3em;
+  font-size: 3em;
 `;
 
 export const TeamsPage = () => {
@@ -67,16 +72,16 @@ export const TeamsPage = () => {
         <div>
             <TeamName>{team.city} {team.nickname} ({team.abbreviation})</TeamName>
             <PageLayout>
-                <div>
+                <RosterLayout>
                     {/*FIXME: update player spreadsheet to include rosters from 2019-2022*/}
                     <h1>Roster:</h1>
                     {players.map((player, i) => <h3><Link to={`/player/${player.playerName}`}>{player.playerName}</Link></h3>)}
-                </div>
+                </RosterLayout>
 
-                <div>
+                <GamesLayout>
                     <h1>Latest Games:</h1>
                     {games.slice(0, 5).map((game, i) => <TeamStatsCard game={game} key={i}/>)}
-                </div>
+                </GamesLayout>
             </PageLayout>
         </div>
     );
