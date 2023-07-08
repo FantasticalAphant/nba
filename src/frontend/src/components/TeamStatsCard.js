@@ -20,9 +20,9 @@ function roundToTwo(num) {
 export const TeamStatsCard = ({game}) => {
     return (
         <Card className={"TeamStatsCard"}>
-            <h3>Game ID: <Link to={`/gamesdetails/game/${game.gameID}`}>{game.gameID}</Link></h3>
-            <h2>Home: {game.ptsHome}; FG%: {roundToTwo(game.fgPctHome)}; FT%: {roundToTwo(game.ftPctHome)}; 3FG%: {roundToTwo(game.fg3PctHome)} </h2>
-            <h2>Away: {game.ptsAway}; FG%: {roundToTwo(game.fgPctAway)}; FT%: {roundToTwo(game.ftPctAway)}; 3FG%: {roundToTwo(game.fg3PctAway)} </h2>
+            <h3>Game ID: <Link to={`/gamesdetails/game/${game["gameID"]}`}>{game["gameID"]}</Link></h3>
+            <h2>Home: {game["ptsHome"]}; FG%: {roundToTwo(game["fgPctHome"])}; FT%: {roundToTwo(game["ftPctHome"])}; 3FG%: {roundToTwo(game["fg3PctHome"])} </h2>
+            <h2>Away: {game["ptsAway"]}; FG%: {roundToTwo(game["fgPctAway"])}; FT%: {roundToTwo(game["ftPctAway"])}; 3FG%: {roundToTwo(game["fg3PctAway"])} </h2>
         </Card>
     );
 }

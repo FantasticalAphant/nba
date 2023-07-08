@@ -37,7 +37,7 @@ export const IndividualGamePage = () => {
             {game.map((game, i) => (
                 <Card>
                     {/*FIXME: for some reason, minutes are returning negative values*/}
-                    <Link to={`/player/${game.playerName}`}>{game.playerName}</Link> ({game.teamAbbreviation}) - MIN: {game.min} | PTS: {game.pts} | {game.fgm}/{game.fga} FG | REB: {game.reb} | AST: {game.ast} | +/-: {game.plusMinus}
+                    <Link to={`/player/${game["playerName"]}`}>{game["playerName"]}</Link> ({game["teamAbbreviation"]}) - MIN: {game["min"]} | PTS: {game["pts"]} | {game["fgm"]}/{game["fga"]} FG | REB: {game["reb"]} | AST: {game["ast"]} | +/-: {game["plusMinus"]}
                 </Card>
             ))}
         </Layout>

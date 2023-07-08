@@ -75,7 +75,7 @@ export const TeamsPage = () => {
                 <RosterLayout>
                     {/*FIXME: update player spreadsheet to include rosters from 2019-2022*/}
                     <h1>Roster:</h1>
-                    {players.map((player, i) => <h3><Link to={`/player/${player.playerName}`}>{player.playerName}</Link></h3>)}
+                    {players.map((player, i) => <h3><Link to={`/player/${player["playerName"]}`}>{player["playerName"]}</Link></h3>)}
                 </RosterLayout>
 
                 <GamesLayout>

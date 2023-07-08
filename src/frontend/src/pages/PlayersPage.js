@@ -51,7 +51,7 @@ export const PlayersPage = () => {
 
     return (
         <div className={"PlayersPage"}>
-            <h1>{players.playerName}</h1>
+            <h1>{players["playerName"]}</h1>
             <h3>
                 {/*this operation is pretty slow though (db bottleneck)*/}
                 <GamesSmallCard games={currentGames} loading={loading}></GamesSmallCard>

@@ -39,11 +39,11 @@ export const TeamCard = ({team}) => {
     return (
         <CardContainer>
             <Container>
-            <Image src={`${logos[team.nickname.toLowerCase()]}`} alt={`${team.nickname} logo`}/>
+            <Image src={`${logos[team["nickname"].toLowerCase()]}`} alt={`${team["nickname"]} logo`}/>
             </Container>
-            <Link to={`/team/id/${team.teamId}`}>  {/* Links to TeamsPage.js */}
+            <Link to={`/team/id/${team["teamId"]}`}>  {/* Links to TeamsPage.js */}
                 <Card>
-                    {team.city} {team.nickname} ({team.abbreviation})
+                    {team["city"]} {team["nickname"]} ({team["abbreviation"]})
                 </Card>
             </Link>
         </CardContainer>

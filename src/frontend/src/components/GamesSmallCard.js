@@ -16,7 +16,7 @@ export const GamesSmallCard = ({games, loading}) => {
         <Ul>
             {games.map((game, i) => (
                 <li key={i}>
-                    <Link to={`/gamesdetails/game/${game.gameId}`}>MIN: {game.min} | PTS: {game.pts} | REB: {game.reb} | AST: {game.ast} | +/-: {game.plusMinus}</Link>
+                    <Link to={`/gamesdetails/game/${game["gameId"]}`}>MIN: {game["min"]} | PTS: {game["pts"]} | REB: {game["reb"]} | AST: {game["ast"]} | +/-: {game["plusMinus"]}</Link>
                 </li>
             ))}
         </Ul>
