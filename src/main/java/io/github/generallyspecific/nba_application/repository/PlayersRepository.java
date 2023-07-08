@@ -13,5 +13,5 @@ public interface PlayersRepository extends JpaRepository<Players, PlayersIdKey> 
     List<Players> findByPlayerName(String playerName);
 
     // players list only goes up to 2019 season
-    List<Players> findByTeamIdAndSeason(int teamId, int season);
+    List<Players> findByTeamIdAndSeasonOrderByPlayerName(int teamId, int season);
 }

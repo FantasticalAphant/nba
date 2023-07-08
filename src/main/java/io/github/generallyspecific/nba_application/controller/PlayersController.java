@@ -37,7 +37,7 @@ public class PlayersController {
     // TODO: maybe use a query instead of path parameter for season
     @GetMapping("/players/{teamId}/{season}")
     List<Players> findByTeamIdAndSeason(@PathVariable int teamId, @PathVariable int season) {
-        return this.playersRepository.findByTeamIdAndSeason(teamId, season);
+        return this.playersRepository.findByTeamIdAndSeasonOrderByPlayerName(teamId, season);
     }
 
 }
