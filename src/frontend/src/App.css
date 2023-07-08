@@ -2,3 +2,8 @@
   padding: 20px;
   text-align: left;
 }
+
+/*remove underlining from all links*/
+.App a {
+  text-decoration-line: none;
+}
