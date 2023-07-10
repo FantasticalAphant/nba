@@ -3,7 +3,9 @@ package io.github.generallyspecific.nba_application.model.gamesdetails;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="games_details")
+@Table(name="games_details", indexes = {
+        @Index(name="idx_gamesdetails_player_id", columnList = "player_id"),
+})
 @IdClass(GamesDetailsIdKey.class)
 public class GamesDetails {
     @Id
