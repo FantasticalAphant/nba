@@ -29,6 +29,7 @@ import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
@@ -39,28 +40,26 @@ import javax.sql.DataSource;
 @Configuration
 public class BatchConfiguration {
 
+    // Store database field names
     private final String[] PLAYERS_FIELD_NAMES = new String[] {
             "player_name", "team_id", "player_id", "season"
     };
-
     private final String[] GAMES_FIELD_NAMES = new String[] {
-            "game_date_est","game_id","game_status_text","home_team_id","visitor_team_id","season","team_id_home","pts_home","fg_pct_home","ft_pct_home","fg3_pct_home","ast_home","reb_home","team_id_away","pts_away","fg_pct_away","ft_pct_away","fg3_pct_away","ast_away","reb_away","home_team_wins"
+            "game_date_est", "game_id", "game_status_text", "home_team_id", "visitor_team_id", "season", "team_id_home", "pts_home", "fg_pct_home", "ft_pct_home", "fg3_pct_home", "ast_home", "reb_home", "team_id_away", "pts_away", "fg_pct_away", "ft_pct_away", "fg3_pct_away", "ast_away", "reb_away", "home_team_wins"
     };
-
     private final String[] TEAMS_FIELD_NAMES = new String[] {
             "team_id", "min_year", "max_year", "abbreviation", "nickname", "year_founded", "city", "arena", "owner", "general_manager", "head_coach"
     };
-
     private final String[] RANKING_FIELD_NAMES = new String[] {
             "teamId", "seasonId", "standingsDate", "conference", "team", "g", "w", "l", "wPct", "homeRecord", "roadRecord"
     };
-
     private final String[] GAMES_DETAILS_FIELD_NAMES = new String[] {
             "game_id", "team_id", "team_abbreviation", "team_city", "player_id", "player_name", "nickname", "start_position", "comment", "min", "fgm", "fga", "fg_pct", "fg3m", "fg3a", "fg3_pct", "ftm", "fta", "ft_pct", "oreb", "dreb", "reb", "ast", "stl", "blk", "to", "pf", "pts", "plus_minus"
     };
 
+    // Read input from the file
     @Bean
-    public FlatFileItemReader<GamesInput> reader() {
+    public FlatFileItemReader<GamesInput> gamesReader() {
         return new FlatFileItemReaderBuilder<GamesInput>()
                 .name("gamesItemReader")
                 .resource(new ClassPathResource("csv/games.csv"))
@@ -73,13 +72,14 @@ public class BatchConfiguration {
                 .build();
     }
 
+    // Process the input
     @Bean
-    public GamesDataProcessor processor() {
+    public GamesDataProcessor gamesProcessor() {
         return new GamesDataProcessor();
     }
 
     @Bean
-    public JdbcBatchItemWriter<Games> writer(DataSource dataSource) {
+    public JdbcBatchItemWriter<Games> gamesWriter(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<Games>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
                 .sql("INSERT INTO games (game_date_est, game_id, game_status_text, home_team_id, visitor_team_id, season, team_id_home, pts_home, fg_pct_home, ft_pct_home, fg3_pct_home, ast_home, reb_home, team_id_away, pts_away, fg_pct_away, ft_pct_away, fg3_pct_away, ast_away, reb_away, home_team_wins)"
@@ -88,27 +88,28 @@ public class BatchConfiguration {
                 .build();
     }
 
+    // Write to the model class
     @Bean
-    public FlatFileItemReader<PlayersInput> reader1() {
+    public FlatFileItemReader<PlayersInput> playersReader() {
         return new FlatFileItemReaderBuilder<PlayersInput>()
                 .name("playersItemReader")
                 .resource(new ClassPathResource("csv/players.csv"))
                 .linesToSkip(1)
                 .delimited()
                 .names(PLAYERS_FIELD_NAMES)
-                .fieldSetMapper(new BeanWrapperFieldSetMapper<PlayersInput>() {{
+                .fieldSetMapper(new BeanWrapperFieldSetMapper<>() {{
                     setTargetType(PlayersInput.class);
                 }})
                 .build();
     }
 
     @Bean
-    public PlayersDataProcessor processor1() {
+    public PlayersDataProcessor playersProcessor() {
         return new PlayersDataProcessor();
     }
 
     @Bean
-    public JdbcBatchItemWriter<Players> writer1(DataSource dataSource) {
+    public JdbcBatchItemWriter<Players> playersWriter(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<Players>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
                 .sql("INSERT INTO players (player_name, team_id, player_id, season)" +
@@ -118,7 +119,7 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public FlatFileItemReader<TeamsInput> reader2() {
+    public FlatFileItemReader<TeamsInput> teamsReader() {
         return new FlatFileItemReaderBuilder<TeamsInput>()
                 .name("teamsItemReader")
                 .resource(new ClassPathResource("csv/teams_updated.csv"))
@@ -132,12 +133,12 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public TeamsDataProcessor processor2() {
+    public TeamsDataProcessor teamsProcessor() {
         return new TeamsDataProcessor();
     }
 
     @Bean
-    public JdbcBatchItemWriter<Teams> writer2(DataSource dataSource) {
+    public JdbcBatchItemWriter<Teams> teamsWriter(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<Teams>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
                 .sql("INSERT INTO teams (team_id, min_year, max_year, abbreviation, nickname, year_founded, city, arena, owner, general_manager, head_coach)"
@@ -147,7 +148,7 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public FlatFileItemReader<RankingInput> reader3() {
+    public FlatFileItemReader<RankingInput> rankingReader() {
         return new FlatFileItemReaderBuilder<RankingInput>()
                 .name("rankingItemReader")
                 .resource(new ClassPathResource("csv/ranking.csv"))
@@ -161,12 +162,12 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public RankingDataProcessor processor3() {
+    public RankingDataProcessor rankingProcessor() {
         return new RankingDataProcessor();
     }
 
     @Bean
-    public JdbcBatchItemWriter<Ranking> writer3(DataSource dataSource) {
+    public JdbcBatchItemWriter<Ranking> rankingWriter(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<Ranking>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
                 .sql("INSERT INTO ranking (team_id, season_id, standings_date, conference, team, g, w, l, w_pct, home_record, road_record)"
@@ -176,7 +177,7 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public FlatFileItemReader<GamesDetailsInput> reader4() {
+    public FlatFileItemReader<GamesDetailsInput> gamesDetailsReader() {
         return new FlatFileItemReaderBuilder<GamesDetailsInput>()
                 .name("gamesDetailsItemReader")
                 .resource(new ClassPathResource("csv/games_details_updated.csv"))
@@ -190,12 +191,12 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public GamesDetailsDataProcessor processor4() {
+    public GamesDetailsDataProcessor gamesDetailsProcessor() {
         return new GamesDetailsDataProcessor();
     }
 
     @Bean
-    public JdbcBatchItemWriter<GamesDetails> writer4(DataSource dataSource) {
+    public JdbcBatchItemWriter<GamesDetails> gamesDetailsWriter(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<GamesDetails>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
                 .sql("INSERT INTO games_details (game_id, team_id, team_abbreviation, team_city, player_id, player_name, nickname, start_position, comment, min, fgm, fga, fg_pct, fg3m, fg3a, fg3_pct, ftm, fta, ft_pct, oreb, dreb, reb, ast, stl, blk, turnover, pf, pts, plus_minus)"
@@ -204,77 +205,80 @@ public class BatchConfiguration {
                 .build();
     }
 
-    @Bean
-    public TaskExecutor taskExecutor() {
-        return new SimpleAsyncTaskExecutor("spring_batch");
-    }
-
+    // run all the processors to convert data from csv to database
     @Bean
     public Job importUserJob(JobRepository jobRepository,
-                             JobCompletionNotificationListener listener, Step step1, Step step2, Step step3, Step step4, Step step5) {
+                             JobCompletionNotificationListener listener, Step processPlayers, Step processGames, Step processTeams, Step processRankings, Step processGamesDetails) {
         return new JobBuilder("importUserJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .listener(listener)
-                .flow(step1)
-                .next(step2)
-                .next(step3)
-                .next(step4)
-                .next(step5)
+                .flow(processPlayers)
+                .next(processGames)
+                .next(processTeams)
+                .next(processRankings)
+                .next(processGamesDetails)
                 .end()
                 .build();
     }
 
     @Bean
-    public Step step1(JobRepository jobRepository,
-                      PlatformTransactionManager transactionManager, JdbcBatchItemWriter<Players> writer) {
-        return new StepBuilder("step1", jobRepository)
+    public Step processPlayers(JobRepository jobRepository,
+                               PlatformTransactionManager transactionManager, JdbcBatchItemWriter<Players> writer) {
+        return new StepBuilder("processPlayers", jobRepository)
+                // TODO: fine-tune chunk size for maximum speed for each step
                 .<PlayersInput, Players> chunk(100, transactionManager)
-                .reader(reader1())
-                .processor(processor1())
+                .reader(playersReader())
+                .processor(playersProcessor())
                 .writer(writer)
                 .build();
     }
 
     @Bean
-    public Step step2(JobRepository jobRepository,
-                      PlatformTransactionManager transactionManager, JdbcBatchItemWriter<Games> writer) {
-        return new StepBuilder("step2", jobRepository)
+    public Step processGames(JobRepository jobRepository,
+                             PlatformTransactionManager transactionManager, JdbcBatchItemWriter<Games> writer) {
+        return new StepBuilder("processGames", jobRepository)
                 .<GamesInput, Games> chunk(100, transactionManager)
-                .reader(reader())
-                .processor(processor())
+                .reader(gamesReader())
+                .processor(gamesProcessor())
                 .writer(writer)
                 .build();
     }
 
     @Bean
-    public Step step3(JobRepository jobRepository,
-                      PlatformTransactionManager transactionManager, JdbcBatchItemWriter<Teams> writer) {
-        return new StepBuilder("step3", jobRepository)
+    public Step processTeams(JobRepository jobRepository,
+                             PlatformTransactionManager transactionManager, JdbcBatchItemWriter<Teams> writer) {
+        return new StepBuilder("processTeams", jobRepository)
                 .<TeamsInput, Teams> chunk(100, transactionManager)
-                .reader(reader2())
-                .processor(processor2())
+                .reader(teamsReader())
+                .processor(teamsProcessor())
                 .writer(writer)
                 .build();
     }
 
     @Bean
-    public Step step4(JobRepository jobRepository,
-                      PlatformTransactionManager transactionManager, JdbcBatchItemWriter<Ranking> writer) {
-        return new StepBuilder("step4", jobRepository)
+    public Step processRankings(JobRepository jobRepository,
+                                PlatformTransactionManager transactionManager, JdbcBatchItemWriter<Ranking> writer) {
+        return new StepBuilder("processRankings", jobRepository)
                 .<RankingInput, Ranking> chunk(200, transactionManager)
-                .reader(reader3())
-                .processor(processor3())
+                .reader(rankingReader())
+                .processor(rankingProcessor())
                 .writer(writer)
                 .build();
     }
 
     @Bean
-    public Step step5(JobRepository jobRepository,
-                      PlatformTransactionManager transactionManager, JdbcBatchItemWriter<GamesDetails> writer, TaskExecutor taskExecutor) {
-        return new StepBuilder("step5", jobRepository)
+    @Primary
+    public TaskExecutor taskExecutor() {
+        return new SimpleAsyncTaskExecutor("spring_batch");
+    }
+
+    @Bean
+    public Step processGamesDetails(JobRepository jobRepository,
+                                    PlatformTransactionManager transactionManager, JdbcBatchItemWriter<GamesDetails> writer, TaskExecutor taskExecutor) {
+        return new StepBuilder("processGamesDetails", jobRepository)
                 .<GamesDetailsInput, GamesDetails> chunk(200, transactionManager)
-                .reader(reader4())
-                .processor(processor4())
+                .reader(gamesDetailsReader())
+                .processor(gamesDetailsProcessor())
                 .writer(writer)
                 .taskExecutor(taskExecutor)
                 .build();
