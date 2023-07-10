@@ -2,10 +2,12 @@ package io.github.generallyspecific.nba_application.repository;
 
 import io.github.generallyspecific.nba_application.model.games.Games;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Repository
 public interface GamesRepository extends JpaRepository<Games, Integer> {
     List<Games> findGamesByGameDateEST(LocalDate date);
 
