@@ -6,20 +6,25 @@ import {GamesPage} from "./pages/GamesPage";
 import {IndividualGamePage} from "./pages/IndividualGamePage";
 import {HomePage} from "./pages/HomePage";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import * as React from "react";
+
+import { ChakraProvider } from "@chakra-ui/react"
 
 function App() {
     return (
-        <div className={"App"}>
-            <Router>
-                <Routes>
-                    <Route path={"/player/:playerName"} element={<PlayersPage/>}/>
-                    <Route path={"/team/id/:teamId"} element={<TeamsPage/>}/>
-                    <Route path={"/games/:date"} element={<GamesPage/>}/>
-                    <Route path={"/gamesdetails/game/:gameId"} element={<IndividualGamePage/>}/>
-                    <Route path={"/"} element={<HomePage/>}/>
-                </Routes>
-            </Router>
-        </div>
+        <ChakraProvider>
+            <div className={"App"}>
+                <Router>
+                    <Routes>
+                        <Route path={"/player/:playerName"} element={<PlayersPage/>}/>
+                        <Route path={"/team/id/:teamId"} element={<TeamsPage/>}/>
+                        <Route path={"/games/:date"} element={<GamesPage/>}/>
+                        <Route path={"/gamesdetails/game/:gameId"} element={<IndividualGamePage/>}/>
+                        <Route path={"/"} element={<HomePage/>}/>
+                    </Routes>
+                </Router>
+            </div>
+        </ChakraProvider>
     );
 }
 

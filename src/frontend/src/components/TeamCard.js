@@ -1,51 +1,29 @@
 // Component displaying logo and name of a team (used on the home page)
 
-import {styled} from "styled-components";
 import {Link} from "react-router-dom";
 import logos from "../images/importLogos";
-
-const Card = styled.h3`
-  font-size: 1.5em;
-  text-align: center;
-`;
+import {Card, CardHeader, CardBody, CardFooter, Image, GridItem} from '@chakra-ui/react'
 
 // TODO: make images the same size (and maybe reposition everything?)
-
-const Image = styled.img`
-  width: 100%;
-  height: auto;
-  transform: scale(0.8);
-`;
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100px;
-  height: 100px;
-`;
-
-const CardContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-self: center;
-  border: black solid 2px;
-  border-radius: 5px;
-`;
 
 export const TeamCard = ({team}) => {
     if (!team) return null;
 
     return (
-        <CardContainer>
-            <Container>
-            <Image src={`${logos[team["nickname"].toLowerCase()]}`} alt={`${team["nickname"]} logo`}/>
-            </Container>
-            <Link to={`/team/id/${team["teamId"]}`}>  {/* Links to TeamsPage.js */}
-                <Card>
+        <Card size={"xs"} borderRadius={"lg"} paddingBottom={"4"}>
+            <CardHeader display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                <Image src={`${logos[team["nickname"].toLowerCase()]}`}
+                       alt={`${team["nickname"]} logo`}
+                       transform={"scale(0.5)"}
+                       width={"auto"}
+                       height={"150px"}
+                       borderRadius={"lg"}/>
+            </CardHeader>
+            <CardBody justifyContent={"center"} alignItems={"center"} textAlign={"center"}>
+                <h3>
                     {team["city"]} {team["nickname"]} ({team["abbreviation"]})
-                </Card>
-            </Link>
-        </CardContainer>
+                </h3>
+            </CardBody>
+        </Card>
     );
 }

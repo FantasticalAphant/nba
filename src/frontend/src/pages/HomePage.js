@@ -2,17 +2,9 @@
 
 import {useEffect, useState} from "react";
 import {TeamCard} from "../components/TeamCard";
-import {styled} from "styled-components";
 import {NavigationBar} from "../components/NavigationBar";
-
-const Page = styled.div`
-`;
-
-const TeamLayout = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 20px;
-`;
+import {Grid} from "@chakra-ui/react";
+import {Link} from "react-router-dom";
 
 export const HomePage = () => {
     const [teams, setTeams] = useState([]);
@@ -29,11 +21,15 @@ export const HomePage = () => {
     )
 
     return (
-        <Page>
+        <div>
             <NavigationBar />
-            <TeamLayout>
-                {teams.map((team, i) => <TeamCard team={team} key={i}/>)}
-            </TeamLayout>
-        </Page>
+            <Grid templateColumns={"repeat(6, 1fr)"} gap={"15px"}>
+                {teams.map((team, i) => (
+                    <Link to={`/team/id/${team["teamId"]}`}>  {/* Links to TeamsPage.js */}
+                        <TeamCard team={team} key={i}/>
+                    </Link>
+                ))}
+            </Grid>
+        </div>
     );
 }
