@@ -24,11 +24,11 @@ public class GamesController {
 
     @GetMapping("/game/{gameId}")
     public Games getGameByGameId(@PathVariable int gameId) {
-        return gamesRepository.findGameByGameID(gameId);
+        return gamesRepository.findGameByGameId(gameId);
     }
 
     @GetMapping("games/team/{teamId}")
     public List<Games> getGamesById(@PathVariable int teamId) {
-        return gamesRepository.findGamesByHomeTeamIDOrVisitorTeamIDOrderByGameDateESTDesc(teamId, teamId);
+        return gamesRepository.findGamesByHomeTeamIdOrVisitorTeamIdOrderByGameDateESTDesc(teamId, teamId);
     }
 }

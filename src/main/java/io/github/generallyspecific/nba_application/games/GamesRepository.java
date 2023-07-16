@@ -11,7 +11,7 @@ import java.util.List;
 public interface GamesRepository extends JpaRepository<Games, Integer> {
     List<Games> findGamesByGameDateEST(LocalDate date);
 
-    Games findGameByGameID(int gameId);
+    Games findGameByGameId(int gameId);
 
-    List<Games> findGamesByHomeTeamIDOrVisitorTeamIDOrderByGameDateESTDesc(int homeTeamId, int visitorTeamId);
+    List<Games> findGamesByHomeTeamIdOrVisitorTeamIdOrderByGameDateESTDesc(int homeTeamId, int visitorTeamId);
 }

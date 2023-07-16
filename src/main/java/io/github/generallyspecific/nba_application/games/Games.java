@@ -15,17 +15,17 @@ public class Games {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="game_id")
-    private int gameID;
+    private int gameId;
     @Column(name="game_status_text")
     private String gameStatusText; // might use a boolean instead?
     @Column(name="home_team_id")
-    private int homeTeamID;
+    private int homeTeamId;
     @Column(name="visitor_team_id")
-    private int visitorTeamID;
+    private int visitorTeamId;
     @Column(name="season")
     private short season;
     @Column(name="team_id_home")
-    private int teamIDHome;
+    private int teamIdHome;
     @Column(name="pts_home")
     private short ptsHome;
     @Column(name="fg_pct_home")
@@ -39,7 +39,7 @@ public class Games {
     @Column(name="reb_home")
     private byte rebHome;
     @Column(name="team_id_away")
-    private int teamIDAway;
+    private int teamIdAway;
     @Column(name="pts_away")
     private short ptsAway;
     @Column(name="fg_pct_away")
@@ -58,26 +58,26 @@ public class Games {
     public Games() {
     }
 
-    public Games(LocalDate gameDateEST, int gameID) {
+    public Games(LocalDate gameDateEST, int gameId) {
         this.gameDateEST = gameDateEST;
-        this.gameID = gameID;
+        this.gameId = gameId;
     }
 
-    public Games(LocalDate gameDateEST, int gameID, String gameStatusText, int homeTeamID, int visitorTeamID, short season, int teamIDHome, short ptsHome, double fgPctHome, double ftPctHome, double fg3PctHome, byte astHome, byte rebHome, int teamIDAway, short ptsAway, double fgPctAway, double ftPctAway, double fg3PctAway, byte astAway, byte rebAway, byte homeTeamWins) {
+    public Games(LocalDate gameDateEST, int gameId, String gameStatusText, int homeTeamId, int visitorTeamId, short season, int teamIdHome, short ptsHome, double fgPctHome, double ftPctHome, double fg3PctHome, byte astHome, byte rebHome, int teamIdAway, short ptsAway, double fgPctAway, double ftPctAway, double fg3PctAway, byte astAway, byte rebAway, byte homeTeamWins) {
         this.gameDateEST = gameDateEST;
-        this.gameID = gameID;
+        this.gameId = gameId;
         this.gameStatusText = gameStatusText;
-        this.homeTeamID = homeTeamID;
-        this.visitorTeamID = visitorTeamID;
+        this.homeTeamId = homeTeamId;
+        this.visitorTeamId = visitorTeamId;
         this.season = season;
-        this.teamIDHome = teamIDHome;
+        this.teamIdHome = teamIdHome;
         this.ptsHome = ptsHome;
         this.fgPctHome = fgPctHome;
         this.ftPctHome = ftPctHome;
         this.fg3PctHome = fg3PctHome;
         this.astHome = astHome;
         this.rebHome = rebHome;
-        this.teamIDAway = teamIDAway;
+        this.teamIdAway = teamIdAway;
         this.ptsAway = ptsAway;
         this.fgPctAway = fgPctAway;
         this.ftPctAway = ftPctAway;
@@ -95,12 +95,12 @@ public class Games {
         this.gameDateEST = gameDateEST;
     }
 
-    public int getGameID() {
-        return gameID;
+    public int getGameId() {
+        return gameId;
     }
 
-    public void setGameID(int gameID) {
-        this.gameID = gameID;
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
     }
 
     public String getGameStatusText() {
@@ -111,20 +111,20 @@ public class Games {
         this.gameStatusText = gameStatusText;
     }
 
-    public int getHomeTeamID() {
-        return homeTeamID;
+    public int getHomeTeamId() {
+        return homeTeamId;
     }
 
-    public void setHomeTeamID(int homeTeamID) {
-        this.homeTeamID = homeTeamID;
+    public void setHomeTeamId(int homeTeamId) {
+        this.homeTeamId = homeTeamId;
     }
 
-    public int getVisitorTeamID() {
-        return visitorTeamID;
+    public int getVisitorTeamId() {
+        return visitorTeamId;
     }
 
-    public void setVisitorTeamID(int visitorTeamID) {
-        this.visitorTeamID = visitorTeamID;
+    public void setVisitorTeamId(int visitorTeamId) {
+        this.visitorTeamId = visitorTeamId;
     }
 
     public short getSeason() {
@@ -135,12 +135,12 @@ public class Games {
         this.season = season;
     }
 
-    public int getTeamIDHome() {
-        return teamIDHome;
+    public int getTeamIdHome() {
+        return teamIdHome;
     }
 
-    public void setTeamIDHome(int teamIDHome) {
-        this.teamIDHome = teamIDHome;
+    public void setTeamIdHome(int teamIdHome) {
+        this.teamIdHome = teamIdHome;
     }
 
     public short getPtsHome() {
@@ -191,12 +191,12 @@ public class Games {
         this.rebHome = rebHome;
     }
 
-    public int getTeamIDAway() {
-        return teamIDAway;
+    public int getTeamIdAway() {
+        return teamIdAway;
     }
 
-    public void setTeamIDAway(int teamIDAway) {
-        this.teamIDAway = teamIDAway;
+    public void setTeamIdAway(int teamIdAway) {
+        this.teamIdAway = teamIdAway;
     }
 
     public short getPtsAway() {
@@ -259,19 +259,19 @@ public class Games {
     public String toString() {
         return "Games{" +
                 "gameDateEST=" + gameDateEST +
-                ", gameID=" + gameID +
+                ", gameId=" + gameId +
                 ", gameStatusText='" + gameStatusText + '\'' +
-                ", homeTeamID=" + homeTeamID +
-                ", visitorTeamID=" + visitorTeamID +
+                ", homeTeamId=" + homeTeamId +
+                ", visitorTeamId=" + visitorTeamId +
                 ", season=" + season +
-                ", teamIDHome=" + teamIDHome +
+                ", teamIdHome=" + teamIdHome +
                 ", ptsHome=" + ptsHome +
                 ", fgPctHome=" + fgPctHome +
                 ", ftPctHome=" + ftPctHome +
                 ", fg3PctHome=" + fg3PctHome +
                 ", astHome=" + astHome +
                 ", rebHome=" + rebHome +
-                ", teamIDAway=" + teamIDAway +
+                ", teamIdAway=" + teamIdAway +
                 ", ptsAway=" + ptsAway +
                 ", fgPctAway=" + fgPctAway +
                 ", ftPctAway=" + ftPctAway +
