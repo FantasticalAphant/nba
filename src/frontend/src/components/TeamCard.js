@@ -1,8 +1,7 @@
 // Component displaying logo and name of a team (used on the home page)
 
-import {Link} from "react-router-dom";
 import logos from "../images/importLogos";
-import {Card, CardHeader, CardBody, CardFooter, Image, GridItem} from '@chakra-ui/react'
+import {Card, CardHeader, CardBody, Image} from '@chakra-ui/react'
 
 // TODO: make images the same size (and maybe reposition everything?)
 
