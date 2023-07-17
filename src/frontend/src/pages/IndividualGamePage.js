@@ -2,16 +2,8 @@
 
 import {useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
-import {styled} from "styled-components";
 import {NavigationBar} from "../components/NavigationBar";
-
-const Layout = styled.div`
-  display: grid;
-`;
-
-const Card = styled.h3`
-  border: papayawhip solid 1px;
-`;
+import {Table, TableContainer, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
 
 export const IndividualGamePage = () => {
     const [game, setGame] = useState([]);
@@ -34,14 +26,42 @@ export const IndividualGamePage = () => {
     // TODO: for each team, group by some order with those not playing at the bottom
 
     return (
-        <Layout>
+        <div>
             <NavigationBar />
-            {game.map((game, i) => (
-                <Card>
-                    {/*FIXME: for some reason, minutes are returning negative values*/}
-                    <Link to={`/player/${game["playerName"]}`}>{game["playerName"]}</Link> ({game["teamAbbreviation"]}) - MIN: {game["min"]} | PTS: {game["pts"]} | {game["fgm"]}/{game["fga"]} FG | REB: {game["reb"]} | AST: {game["ast"]} | +/-: {game["plusMinus"]}
-                </Card>
-            ))}
-        </Layout>
+            <TableContainer>
+                <Table variant={"simple"}>
+                    <Thead>
+                        <Tr>
+                            <Th>Player (Team)</Th>
+                            <Th>MIN</Th>
+                            <Th>PTS</Th>
+                            <Th>FG</Th>
+                            <Th>REB</Th>
+                            <Th>AST</Th>
+                            <Th>+/-</Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {game.map((game, i) => {
+                            const minutes = game["min"];
+                            const absent = "DNP";
+                            return (<Tr>
+                                    <Td>
+                                        <Link to={`/player/${game["playerName"]}`}>
+                                            {game["playerName"]} ({game["teamAbbreviation"]})
+                                        </Link>
+                                    </Td>
+                                    <Td>{minutes ? game["min"] : absent}</Td>
+                                    <Td>{minutes ? game["pts"] : absent}</Td>
+                                    <Td>{minutes ? (game["fgm"] + "/" + game["fga"]) : absent}</Td>
+                                    <Td>{minutes ? game["ast"] : absent}</Td>
+                                    <Td>{minutes ? game["reb"] : absent}</Td>
+                                    <Td>{minutes ? game["plusMinus"] : absent}</Td>
+                                </Tr>
+                            )})}
+                    </Tbody>
+                </Table>
+            </TableContainer>
+        </div>
     );
 }
