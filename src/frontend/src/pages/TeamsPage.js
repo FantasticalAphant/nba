@@ -3,24 +3,8 @@
 import {useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
 import {TeamStatsCard} from "../components/TeamStatsCard";
-import {styled} from "styled-components";
 import {NavigationBar} from "../components/NavigationBar";
-
-const PageLayout = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 20px;
-`;
-
-const RosterLayout = styled.div`
-`;
-
-const GamesLayout = styled.div`
-`;
-
-const TeamName = styled.h1`
-  font-size: 3em;
-`;
+import {Tabs, TabList, TabPanels, Tab, TabPanel, Center, Accordion} from '@chakra-ui/react'
 
 export const TeamsPage = () => {
     const [team, setTeam] = useState([]);
@@ -68,23 +52,31 @@ export const TeamsPage = () => {
     if (!players) return null;
 
     // TODO: implement paging
+    // TODO: refactor into more components
 
     return (
         <div>
             <NavigationBar />
-            <TeamName>{team.city} {team.nickname} ({team.abbreviation})</TeamName>
-            <PageLayout>
-                <RosterLayout>
-                    {/*FIXME: update player spreadsheet to include rosters from 2019-2022*/}
-                    <h1>Roster:</h1>
-                    {players.map((player, i) => <h3><Link to={`/player/${player["playerName"]}`}>{player["playerName"]}</Link></h3>)}
-                </RosterLayout>
-
-                <GamesLayout>
-                    <h1>Latest Games:</h1>
-                    {games.slice(0, 5).map((game, i) => <TeamStatsCard game={game} key={i}/>)}
-                </GamesLayout>
-            </PageLayout>
+            <Center>
+                <h1>{team["city"]} {team["nickname"]} ({team["abbreviation"]})</h1>
+            </Center>
+            <Tabs variant={"enclosed"}>
+                <TabList>
+                    <Tab>Roster</Tab>
+                    <Tab>Latest Games</Tab>
+                </TabList>
+                <TabPanels>
+                    <TabPanel>
+                        {/*FIXME: update player spreadsheet to include rosters from 2019-2022*/}
+                        {players.map((player, i) => <h3><Link to={`/player/${player["playerName"]}`}>{player["playerName"]}</Link></h3>)}
+                    </TabPanel>
+                    <TabPanel>
+                        <Accordion defaultIndex={[0, 1, 2, 3, 4]} allowMultiple>
+                            {games.slice(0, 20).map((game, i) => <TeamStatsCard game={game} key={i}/>)}
+                        </Accordion>
+                    </TabPanel>
+                </TabPanels>
+            </Tabs>
         </div>
     );
 }

@@ -7,7 +7,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 export const NavigationBar = () => {
     return (
-        <Navbar data-bs-theme="dark" expand="lg" className="bg-body-tertiary" style={{ marginBottom: '40px'}}>
+        <Navbar data-bs-theme="dark" expand="lg" className="bg-body-tertiary" style={{ marginBottom: '40px', borderRadius: '5px'}}>
             <Container fluid>
                 <Navbar.Brand href="/">NBA Information Board</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
