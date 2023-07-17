@@ -1,9 +1,9 @@
 // Page displaying information for a specific player and some of their games
 import {useEffect, useState} from "react";
-import {GamesSmallCard} from "../components/GamesSmallCard";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {Pagination} from "../components/Pagination";
 import {NavigationBar} from "../components/NavigationBar";
+import {Center, Spinner, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
 
 export const PlayersPage = () => {
     const [players, setPlayers] = useState([]);
@@ -53,11 +53,42 @@ export const PlayersPage = () => {
     return (
         <div className={"PlayersPage"}>
             <NavigationBar />
-            <h1>{players["playerName"]}</h1>
-            {/*this operation is pretty slow though (db bottleneck)*/}
-            <h3>
-                <GamesSmallCard games={currentGames} loading={loading}></GamesSmallCard>
-            </h3>
+            <Center>
+                <h1>{players["playerName"]}</h1>
+            </Center>
+            <Pagination gamesPerPage={gamesPerPage} totalGames={games.length} paginate={paginate}></Pagination>
+            {loading ? (<Spinner />) : (
+                <TableContainer>
+                    <Table variant={"simple"}>
+                        <Thead>
+                            <Tr>
+                                <Th>Game ID</Th>
+                                <Th>Minutes</Th>
+                                <Th>Points</Th>
+                                <Th>Rebounds</Th>
+                                <Th>Assists</Th>
+                                <Th>+/-</Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            {currentGames.map((game, i) => {
+                                const minutes = game["min"];
+                                const absent = "DNP";
+                                return (<Tr>
+                                        <Td>
+                                            <Link to={`/gamesdetails/game/${game["gameId"]}`}>{game["gameId"]}</Link>
+                                        </Td>
+                                        <Td>{minutes ? game["min"] : absent}</Td>
+                                        <Td>{minutes ? game["pts"] : absent}</Td>
+                                        <Td>{minutes ? game["ast"] : absent}</Td>
+                                        <Td>{minutes ? game["reb"] : absent}</Td>
+                                        <Td>{minutes ? game["plusMinus"] : absent}</Td>
+                                    </Tr>
+                                )})}
+                        </Tbody>
+                    </Table>
+                </TableContainer>
+            )}
             <Pagination gamesPerPage={gamesPerPage} totalGames={games.length} paginate={paginate}></Pagination>
         </div>
     );
