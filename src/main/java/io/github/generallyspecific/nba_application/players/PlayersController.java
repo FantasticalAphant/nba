@@ -1,9 +1,6 @@
 package io.github.generallyspecific.nba_application.players;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,9 +30,17 @@ public class PlayersController {
 
     // add method to get all players from a specific team in a specific season
     // TODO: maybe use a query instead of path parameter for season
-    @GetMapping("/players/{teamId}/{season}")
-    List<Players> findByTeamIdAndSeason(@PathVariable int teamId, @PathVariable int season) {
-        return this.playersRepository.findByTeamIdAndSeasonOrderByPlayerName(teamId, season);
+    @GetMapping("/players/{teamId}")
+    List<Players> findByTeamIdAndSeason(@PathVariable int teamId, @RequestParam(required=false) String season) {
+
+        if (season == null) {
+            // return all players from the most recent season
+            // TODO: don't hardcode value
+            return this.playersRepository.findByTeamIdAndSeasonOrderByPlayerName(teamId, 2019);
+        } else {
+            // return all players from the specified season
+            return this.playersRepository.findByTeamIdAndSeasonOrderByPlayerName(teamId, Integer.parseInt(season));
+        }
     }
 
 }

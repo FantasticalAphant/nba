@@ -4,11 +4,18 @@ import {useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
 import {TeamStatsCard} from "../components/TeamStatsCard";
 import {NavigationBar} from "../components/NavigationBar";
-import {Tabs, TabList, TabPanels, Tab, TabPanel, Center, Accordion} from '@chakra-ui/react'
+import {Tabs, TabList, TabPanels, Tab, TabPanel, Center, Accordion, Divider, VStack} from '@chakra-ui/react'
+import {YearSelector} from "../components/YearSelector";
 
 export const TeamsPage = () => {
     const [team, setTeam] = useState([]);
     const {teamId} = useParams();
+    const [selectedYear, setSelectedYear] = useState(2019);
+
+    const handleYearChange = (year) => {
+        console.log(`Year changed to ${year}`);
+        setSelectedYear(year);
+    }
 
     useEffect(
         () => {
@@ -37,12 +44,12 @@ export const TeamsPage = () => {
     useEffect(
         () => {
             const fetchPlayers = async () => {
-                const response = await fetch(`http://localhost:8080/players/${teamId}/2019`);
+                const response = await fetch(`http://localhost:8080/players/${teamId}?season=${selectedYear}`);
                 const data = await response.json();
                 setPlayers(data);
             };
             fetchPlayers();
-        }, [teamId]
+        }, [teamId, selectedYear]
     )
 
     // also print out the latest couple of games
@@ -58,7 +65,10 @@ export const TeamsPage = () => {
         <div>
             <NavigationBar />
             <Center>
-                <h1>{team["city"]} {team["nickname"]} ({team["abbreviation"]})</h1>
+                <VStack>
+                    <h1>{team["city"]} {team["nickname"]} ({team["abbreviation"]})</h1>
+                    <YearSelector onYearChange={handleYearChange}/>
+                </VStack>
             </Center>
             <Tabs variant={"enclosed"}>
                 <TabList>
