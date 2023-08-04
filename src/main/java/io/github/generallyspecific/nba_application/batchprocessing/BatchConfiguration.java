@@ -1,14 +1,9 @@
 package io.github.generallyspecific.nba_application.batchprocessing;
 
-import io.github.generallyspecific.nba_application.games.GamesDataProcessor;
 import io.github.generallyspecific.nba_application.games.GamesInput;
-import io.github.generallyspecific.nba_application.stats.GamesDetailsDataProcessor;
 import io.github.generallyspecific.nba_application.stats.GamesDetailsInput;
-import io.github.generallyspecific.nba_application.players.PlayersDataProcessor;
 import io.github.generallyspecific.nba_application.players.PlayersInput;
-import io.github.generallyspecific.nba_application.rankings.RankingDataProcessor;
 import io.github.generallyspecific.nba_application.rankings.RankingInput;
-import io.github.generallyspecific.nba_application.teams.TeamsDataProcessor;
 import io.github.generallyspecific.nba_application.teams.TeamsInput;
 import io.github.generallyspecific.nba_application.games.Games;
 import io.github.generallyspecific.nba_application.stats.GamesDetails;

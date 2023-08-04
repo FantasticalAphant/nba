@@ -1,5 +1,7 @@
-package io.github.generallyspecific.nba_application.games;
+package io.github.generallyspecific.nba_application.batchprocessing;
 
+import io.github.generallyspecific.nba_application.games.Games;
+import io.github.generallyspecific.nba_application.games.GamesInput;
 import org.springframework.batch.item.ItemProcessor;
 
 import java.time.LocalDate;

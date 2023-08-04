@@ -1,5 +1,7 @@
-package io.github.generallyspecific.nba_application.stats;
+package io.github.generallyspecific.nba_application.batchprocessing;
 
+import io.github.generallyspecific.nba_application.stats.GamesDetails;
+import io.github.generallyspecific.nba_application.stats.GamesDetailsInput;
 import org.springframework.batch.item.ItemProcessor;
 
 public class GamesDetailsDataProcessor implements ItemProcessor<GamesDetailsInput, GamesDetails> {
