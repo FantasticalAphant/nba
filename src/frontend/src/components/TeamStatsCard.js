@@ -14,7 +14,7 @@ import {
 import {AccordionItem} from "@chakra-ui/react";
 
 function roundToTwo(num) {
-    return +(Math.round(num + "e+2")  + "e-2");
+    return +(Math.round(num + "e+2")  + "e-2") * 100;
 }
 
 // This doesn't have all the stats like field goal / field goals made (calculate by summing up)
