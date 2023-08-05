@@ -19,7 +19,8 @@ function roundToTwo(num) {
 
 // This doesn't have all the stats like field goal / field goals made (calculate by summing up)
 
-export const TeamStatsCard = ({game}) => {
+export const TeamStatsCard = ({gameInfo}) => {
+    const game = gameInfo["game"];
     return (
         <AccordionItem>
             <h2>
@@ -35,6 +36,7 @@ export const TeamStatsCard = ({game}) => {
                     <Box fontSize={"xs"}>
                         <CardHeader>
                             <h3>Game ID: <Link to={`/gamesdetails/game/${game["gameId"]}`}>{game["gameId"]}</Link></h3>
+                            <h3>{gameInfo["homeTeamName"]} vs {gameInfo["visitorTeamName"]}</h3>
                         </CardHeader>
                         <Divider />
                         <CardBody>

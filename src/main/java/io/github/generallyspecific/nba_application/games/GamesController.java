@@ -28,7 +28,7 @@ public class GamesController {
     }
 
     @GetMapping("games/team/{teamId}")
-    public List<Games> getGamesById(@PathVariable int teamId) {
-        return gamesRepository.findGamesByHomeTeamIdOrVisitorTeamIdOrderByGameDateESTDesc(teamId, teamId);
+    public List<GameInfoDTO> getGamesById(@PathVariable int teamId) {
+        return gamesRepository.findGameInfoByGameId(teamId);
     }
 }
