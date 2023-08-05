@@ -5,16 +5,22 @@ import {Link, useParams} from "react-router-dom";
 import {TeamStatsCard} from "../components/TeamStatsCard";
 import {NavigationBar} from "../components/NavigationBar";
 import {Accordion, Center, Tab, TabList, TabPanel, TabPanels, Tabs, VStack} from '@chakra-ui/react'
-import {YearSelector} from "../components/YearSelector";
+import {RosterYearSelector} from "../components/RosterYearSelector";
+import {TeamGamesYearSelector} from "../components/TeamGamesYearSelector";
 
 export const TeamsPage = () => {
     const [team, setTeam] = useState([]);
     const {teamId} = useParams();
-    const [selectedYear, setSelectedYear] = useState(2019);
+    const [selectedRosterYear, setSelectedRosterYear] = useState(2019);
+    const [selectedGamesYear, setSelectedGamesYear] = useState(2022);
 
-    const handleYearChange = (year) => {
+    const handleRosterYearChange = (year) => {
+        setSelectedRosterYear(year);
+    }
+
+    const handleGamesYearChange = (year) => {
         console.log(`Year changed to ${year}`);
-        setSelectedYear(year);
+        setSelectedGamesYear(year);
     }
 
     useEffect(
@@ -33,24 +39,24 @@ export const TeamsPage = () => {
     useEffect(
         () => {
             const fetchGames = async () => {
-                const response = await fetch(`http://localhost:8080/games/team/${teamId}`);
+                const response = await fetch(`http://localhost:8080/games/team/${teamId}/${selectedGamesYear}`);
                 const data = await response.json();
                 setGames(data);
             };
             fetchGames();
-        }, [teamId]
+        }, [teamId, selectedGamesYear]
     )
 
     const [players, setPlayers] = useState([]);
     useEffect(
         () => {
             const fetchPlayers = async () => {
-                const response = await fetch(`http://localhost:8080/players/${teamId}?season=${selectedYear}`);
+                const response = await fetch(`http://localhost:8080/players/${teamId}?season=${selectedRosterYear}`);
                 const data = await response.json();
                 setPlayers(data);
             };
             fetchPlayers();
-        }, [teamId, selectedYear]
+        }, [teamId, selectedRosterYear]
     )
 
     // also print out the latest couple of games
@@ -68,7 +74,6 @@ export const TeamsPage = () => {
             <Center>
                 <VStack>
                     <h1>{team["city"]} {team["nickname"]} ({team["abbreviation"]})</h1>
-                    <YearSelector onYearChange={handleYearChange}/>
                 </VStack>
             </Center>
             <Tabs variant={"enclosed"}>
@@ -79,10 +84,13 @@ export const TeamsPage = () => {
                 <TabPanels>
                     <TabPanel>
                         {/*FIXME: update player spreadsheet to include rosters from more years*/}
+                        <RosterYearSelector onYearChange={handleRosterYearChange}/>
                         {players.map((player, i) => <h3><Link to={`/player/${player["playerName"]}`}>{player["playerName"]}</Link></h3>)}
                     </TabPanel>
                     <TabPanel>
+                        <TeamGamesYearSelector onYearChange={handleGamesYearChange}/>
                         <Accordion defaultIndex={[0, 1, 2, 3, 4]} allowMultiple>
+                            {/*TODO: show all games*/}
                             {games.slice(0, 20).map((game, i) => <TeamStatsCard gameInfo={game} key={i}/>)}
                         </Accordion>
                     </TabPanel>

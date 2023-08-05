@@ -21,6 +21,10 @@ function roundToTwo(num) {
 
 export const TeamStatsCard = ({gameInfo}) => {
     const game = gameInfo["game"];
+    const date = new Date(game["gameDateEST"])
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const dateString = date.toLocaleDateString("en-US", options);
+
     return (
         <AccordionItem>
             <h2>
@@ -36,6 +40,7 @@ export const TeamStatsCard = ({gameInfo}) => {
                     <Box fontSize={"xs"}>
                         <CardHeader>
                             <h3>Game ID: <Link to={`/gamesdetails/game/${game["gameId"]}`}>{game["gameId"]}</Link></h3>
+                            <h3>{dateString}</h3>
                         </CardHeader>
                         <Divider />
                         <CardBody>

@@ -31,4 +31,9 @@ public class GamesController {
     public List<GameInfoDTO> getGamesById(@PathVariable int teamId) {
         return gamesRepository.findGameInfoByGameId(teamId);
     }
+
+    @GetMapping("games/team/{teamId}/{season}")
+    public List<GameInfoDTO> getGamesByIdAndSeason(@PathVariable int teamId, @PathVariable short season) {
+        return gamesRepository.findGameInfoByGameIdAndSeason(teamId, season);
+    }
 }
