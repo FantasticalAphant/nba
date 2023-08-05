@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
 import {TeamStatsCard} from "../components/TeamStatsCard";
 import {NavigationBar} from "../components/NavigationBar";
-import {Tabs, TabList, TabPanels, Tab, TabPanel, Center, Accordion, Divider, VStack} from '@chakra-ui/react'
+import {Accordion, Center, Tab, TabList, TabPanel, TabPanels, Tabs, VStack} from '@chakra-ui/react'
 import {YearSelector} from "../components/YearSelector";
 
 export const TeamsPage = () => {
@@ -22,6 +22,7 @@ export const TeamsPage = () => {
             const fetchTeam = async () => {
                 const response = await fetch(`http://localhost:8080/team/id/${teamId}`);
                 const data = await response.json();
+
                 setTeam(data);
             };
             fetchTeam();
@@ -77,12 +78,12 @@ export const TeamsPage = () => {
                 </TabList>
                 <TabPanels>
                     <TabPanel>
-                        {/*FIXME: update player spreadsheet to include rosters from 2019-2022*/}
+                        {/*FIXME: update player spreadsheet to include rosters from more years*/}
                         {players.map((player, i) => <h3><Link to={`/player/${player["playerName"]}`}>{player["playerName"]}</Link></h3>)}
                     </TabPanel>
                     <TabPanel>
                         <Accordion defaultIndex={[0, 1, 2, 3, 4]} allowMultiple>
-                            {games.slice(0, 20).map((game, i) => <TeamStatsCard game={game} key={i}/>)}
+                            {games.slice(0, 20).map((game, i) => <TeamStatsCard gameInfo={game} key={i}/>)}
                         </Accordion>
                     </TabPanel>
                 </TabPanels>

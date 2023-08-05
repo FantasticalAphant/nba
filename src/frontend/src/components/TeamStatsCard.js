@@ -19,7 +19,8 @@ function roundToTwo(num) {
 
 // This doesn't have all the stats like field goal / field goals made (calculate by summing up)
 
-export const TeamStatsCard = ({game}) => {
+export const TeamStatsCard = ({gameInfo}) => {
+    const game = gameInfo["game"];
     return (
         <AccordionItem>
             <h2>
@@ -38,8 +39,8 @@ export const TeamStatsCard = ({game}) => {
                         </CardHeader>
                         <Divider />
                         <CardBody>
-                            <h2>Home: {game["ptsHome"]}; FG%: {roundToTwo(game["fgPctHome"])}; FT%: {roundToTwo(game["ftPctHome"])}; 3FG%: {roundToTwo(game["fg3PctHome"])} </h2>
-                            <h2>Away: {game["ptsAway"]}; FG%: {roundToTwo(game["fgPctAway"])}; FT%: {roundToTwo(game["ftPctAway"])}; 3FG%: {roundToTwo(game["fg3PctAway"])} </h2>
+                            <h2>{gameInfo["homeTeamName"]}: {game["ptsHome"]}; FG%: {roundToTwo(game["fgPctHome"])}; FT%: {roundToTwo(game["ftPctHome"])}; 3FG%: {roundToTwo(game["fg3PctHome"])} </h2>
+                            <h2>{gameInfo["visitorTeamName"]}: {game["ptsAway"]}; FG%: {roundToTwo(game["fgPctAway"])}; FT%: {roundToTwo(game["ftPctAway"])}; 3FG%: {roundToTwo(game["fg3PctAway"])} </h2>
                         </CardBody>
                     </Box>
                 </Card>
