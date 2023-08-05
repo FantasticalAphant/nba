@@ -36,6 +36,7 @@ export const TeamStatsCard = ({gameInfo}) => {
                     <Box fontSize={"xs"}>
                         <CardHeader>
                             <h3>Game ID: <Link to={`/gamesdetails/game/${game["gameId"]}`}>{game["gameId"]}</Link></h3>
+                            <h3>{gameInfo["homeTeamName"]} vs {gameInfo["visitorTeamName"]}</h3>
                         </CardHeader>
                         <Divider />
                         <CardBody>
