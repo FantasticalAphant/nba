@@ -2,13 +2,13 @@ import './App.css';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom"
 import {PlayersPage} from "./pages/PlayersPage";
 import {TeamsPage} from "./pages/TeamsPage";
-import {GamesPage} from "./pages/GamesPage";
 import {IndividualGamePage} from "./pages/IndividualGamePage";
 import {HomePage} from "./pages/HomePage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as React from "react";
 
 import { ChakraProvider } from "@chakra-ui/react"
+import {GamesFilterPage} from "./pages/GamesFilterPage";
 
 function App() {
     return (
@@ -18,9 +18,9 @@ function App() {
                     <Routes>
                         <Route path={"/player/:playerName"} element={<PlayersPage/>}/>
                         <Route path={"/team/id/:teamId"} element={<TeamsPage/>}/>
-                        <Route path={"/games/:date"} element={<GamesPage/>}/>
                         <Route path={"/gamesdetails/game/:gameId"} element={<IndividualGamePage/>}/>
                         <Route path={"/"} element={<HomePage/>}/>
+                        <Route path={"/calendar"} element={<GamesFilterPage/>} />
                     </Routes>
                 </Router>
             </div>

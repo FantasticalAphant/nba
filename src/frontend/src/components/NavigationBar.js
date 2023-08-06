@@ -19,6 +19,7 @@ export const NavigationBar = () => {
                     >
                         {/*TODO: replace with actual links*/}
                         <Nav.Link href="/">Home</Nav.Link>
+                        <Nav.Link href="/calendar">Calendar</Nav.Link>
                         <Nav.Link href="#action2" disabled>About</Nav.Link>
                         <NavDropdown title="Link" id="navbarScrollingDropdown">
                             <NavDropdown.Item href="#action3">Players</NavDropdown.Item>

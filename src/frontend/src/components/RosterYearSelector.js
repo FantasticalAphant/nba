@@ -1,4 +1,4 @@
-import {Box, Center, Slider, SliderFilledTrack, SliderThumb, SliderTrack} from "@chakra-ui/react";
+import {Box, Slider, SliderFilledTrack, SliderThumb, SliderTrack} from "@chakra-ui/react";
 import {useState} from "react";
 
 export const RosterYearSelector = (props) => {

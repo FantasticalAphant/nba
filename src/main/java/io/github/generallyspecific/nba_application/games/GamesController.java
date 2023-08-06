@@ -18,8 +18,8 @@ public class GamesController {
     }
 
     @GetMapping("/games/{date}")
-    public List<Games> getGamesByDate(@PathVariable LocalDate date) {
-        return gamesRepository.findGamesByGameDateEST(date);
+    public List<GameInfoDTO> getGamesByDate(@PathVariable LocalDate date) {
+        return gamesRepository.findGameInfoByGameDateEST(date);
     }
 
     @GetMapping("/game/{gameId}")

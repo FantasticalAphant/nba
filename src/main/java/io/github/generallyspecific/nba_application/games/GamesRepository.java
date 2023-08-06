@@ -9,6 +9,15 @@ import java.util.List;
 
 @Repository
 public interface GamesRepository extends JpaRepository<Games, Integer> {
+    // Retrieve GameInfoDTO objects by date
+    @Query("SELECT new io.github.generallyspecific.nba_application.games.GameInfoDTO(g, CONCAT(ht.city, ' ', ht.nickname), CONCAT(vt.city, ' ', vt.nickname)) " +
+            "FROM Games g " +
+            "JOIN Teams ht ON g.homeTeamId = ht.teamId " +
+            "JOIN Teams vt ON g.visitorTeamId = vt.teamId " +
+            "WHERE g.gameDateEST = ?1 " +
+            "ORDER BY g.gameDateEST DESC")
+    List<GameInfoDTO> findGameInfoByGameDateEST(LocalDate date);
+
     List<Games> findGamesByGameDateEST(LocalDate date);
 
     Games findGameByGameId(int gameId);
