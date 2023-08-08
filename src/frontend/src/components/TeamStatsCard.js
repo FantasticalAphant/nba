@@ -19,37 +19,48 @@ function roundToTwo(num) {
 
 // This doesn't have all the stats like field goal / field goals made (calculate by summing up)
 
-export const TeamStatsCard = ({gameInfo}) => {
+export const TeamStatsCard = ({id, gameInfo}) => {
     const game = gameInfo["game"];
     const date = new Date(game["gameDateEST"])
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const dateString = date.toLocaleDateString("en-US", options);
 
+    // home team === id && home team won -- green
+    // home team === id && home team lost -- red
+    // home team !== id && home team lost -- green
+    // away team !== id && home team won -- red
+    const cardColor = (id === game["homeTeamId"] && game["homeTeamWins"] === 1) || (id !== game["homeTeamId"] && game["homeTeamWins"] === 0) ? "green.100" : "red.100";
+
     return (
         <AccordionItem>
-            <h2>
-                <AccordionButton>
-                    <Box as={"span"} flex={"1"} textAlign={"right"}>
-                        <h4>Game ID: {game["gameId"]}</h4>
-                    </Box>
-                    <AccordionIcon />
-                </AccordionButton>
-            </h2>
-            <AccordionPanel pb={4}>
-                <Card className={"TeamStatsCard"} size={"sm"} margin={"10px"} borderWidth={"2px"} borderColor={"gray.200"}>
-                    <Box fontSize={"xs"}>
-                        <CardHeader>
-                            <h3>Game ID: <Link to={`/gamesdetails/game/${game["gameId"]}`}>{game["gameId"]}</Link></h3>
-                            <h3>{dateString}</h3>
-                        </CardHeader>
-                        <Divider />
-                        <CardBody>
-                            <h2>{gameInfo["homeTeamName"]}: {game["ptsHome"]}; FG%: {roundToTwo(game["fgPctHome"])}; FT%: {roundToTwo(game["ftPctHome"])}; 3FG%: {roundToTwo(game["fg3PctHome"])} </h2>
-                            <h2>{gameInfo["visitorTeamName"]}: {game["ptsAway"]}; FG%: {roundToTwo(game["fgPctAway"])}; FT%: {roundToTwo(game["ftPctAway"])}; 3FG%: {roundToTwo(game["fg3PctAway"])} </h2>
-                        </CardBody>
-                    </Box>
-                </Card>
-            </AccordionPanel>
+            {({ isExpanded }) => (
+                <>
+                    <h2>
+                        <AccordionButton bg={isExpanded ? "white" : cardColor}>
+                            <Box as={"span"} flex={"1"} textAlign={"right"}>
+                                <h4>Game ID: {game["gameId"]}</h4>
+                            </Box>
+                            <AccordionIcon />
+                        </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4}>
+                        <Card className={"TeamStatsCard"} size={"sm"} margin={"10px"} borderWidth={"2px"} borderColor={"gray.200"} bg={cardColor}>
+                            <Box fontSize={"xs"}>
+                                <CardHeader>
+                                    <h3>Game ID: <Link to={`/gamesdetails/game/${game["gameId"]}`}>{game["gameId"]}</Link></h3>
+                                    <h3>{dateString}</h3>
+                                    {id === game["homeTeamId"] ? <h3>Home</h3> : <h3>Away</h3>}
+                                </CardHeader>
+                                <Divider />
+                                <CardBody>
+                                    <h2>{gameInfo["homeTeamName"]}: {game["ptsHome"]}; FG%: {roundToTwo(game["fgPctHome"])}; FT%: {roundToTwo(game["ftPctHome"])}; 3FG%: {roundToTwo(game["fg3PctHome"])} </h2>
+                                    <h2>{gameInfo["visitorTeamName"]}: {game["ptsAway"]}; FG%: {roundToTwo(game["fgPctAway"])}; FT%: {roundToTwo(game["ftPctAway"])}; 3FG%: {roundToTwo(game["fg3PctAway"])} </h2>
+                                </CardBody>
+                            </Box>
+                        </Card>
+                    </AccordionPanel>
+                </>
+            )}
         </AccordionItem>
     );
 }
