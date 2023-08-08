@@ -43,4 +43,8 @@ public class PlayersController {
         }
     }
 
+    @GetMapping("/players/search")
+    public List<Players> search(@RequestParam String query) {
+        return this.playersRepository.search(query);
+    }
 }

@@ -30,6 +30,7 @@ export const GamesFilterPage = () => {
             {games.length > 0 ?
                 games.map((game, i) => <GamesInfoCard gameInfo={game} key={i}/>)
                 :
+                // TODO: don't print this out on first load
                 <h1>No game data available for this date</h1>
             }
         </div>

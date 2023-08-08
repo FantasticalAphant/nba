@@ -9,6 +9,7 @@ import * as React from "react";
 
 import { ChakraProvider } from "@chakra-ui/react"
 import {GamesFilterPage} from "./pages/GamesFilterPage";
+import {PlayerSearchPage} from "./pages/PlayerSearchPage";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                         <Route path={"/gamesdetails/game/:gameId"} element={<IndividualGamePage/>}/>
                         <Route path={"/"} element={<HomePage/>}/>
                         <Route path={"/calendar"} element={<GamesFilterPage/>} />
+                        <Route path={"/players"} element={<PlayerSearchPage/>}/>
                     </Routes>
                 </Router>
             </div>

@@ -51,6 +51,7 @@ export const PlayersPage = () => {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
+        // TODO: handle players with the same name
         <div className={"PlayersPage"}>
             <NavigationBar />
             <Center>
