@@ -23,7 +23,6 @@ public class GamesDetailsController {
         return this.gamesDetailsRepository.findLatestGamesDetailsByPlayerName(playerName);
     }
 
-    // maybe also search for team id (to group by team)
     @GetMapping("/gamesdetails/game/{gameId}")
     public List<GamesDetails> getGamesDetailsByGameId(@PathVariable int gameId) {
         return this.gamesDetailsRepository.getGamesDetailsByGameId(gameId);
