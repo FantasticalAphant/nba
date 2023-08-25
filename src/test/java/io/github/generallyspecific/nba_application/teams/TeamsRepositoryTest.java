@@ -5,18 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
-public class TeamsRepositoryTest {
+class TeamsRepositoryTest {
     @Autowired
     private TeamsRepository teamsRepository;
 
     @Test
-    public void testFindAll() {
+    void testFindAll() {
         Iterable<Teams> teams = teamsRepository.findAll();
         assert(teams.iterator().hasNext());
     }
 
     @Test
-    public void testFindTeamsByNickname() {
+    void testFindTeamsByNickname() {
         Teams teams = teamsRepository.findTeamsByNickname("Lakers");
         assert(teams.getTeamId() == 14);
     }
