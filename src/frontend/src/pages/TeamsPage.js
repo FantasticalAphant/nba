@@ -91,7 +91,7 @@ export const TeamsPage = () => {
                         <TeamGamesYearSelector onYearChange={handleGamesYearChange}/>
                         <Accordion defaultIndex={[0, 1, 2, 3, 4]} allowMultiple>
                             {/*TODO: show all games*/}
-                            {games.slice(0, 20).map((game, i) => <TeamStatsCard id={+teamId} gameInfo={game} key={i}/>)}
+                            {games.slice(0, 20).map((game, i) => <TeamStatsCard id={Number(teamId)} gameInfo={game} key={i}/>)}
                         </Accordion>
                     </TabPanel>
                 </TabPanels>
