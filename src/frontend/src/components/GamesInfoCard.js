@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {Box, Divider, Heading} from "@chakra-ui/react";
 
 function roundToTwo(num) {
-    return +(Math.round(num + "e+2")  + "e-2") * 100;
+    return Number(Math.round(num + "e+2")  + "e-2") * 100;
 }
 
 export const GamesInfoCard = ({gameInfo}) => {
