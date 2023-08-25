@@ -57,7 +57,7 @@ export const PlayersPage = () => {
             <Center>
                 <h1>{players["playerName"]}</h1>
             </Center>
-            <Pagination gamesPerPage={gamesPerPage} totalGames={games.length} paginate={paginate}></Pagination>
+            <Pagination gamesPerPage={gamesPerPage} totalGames={games.length} paginate={paginate} />
             {loading ? (<Spinner />) : (
                 <TableContainer>
                     <Table variant={"simple"}>
@@ -90,7 +90,7 @@ export const PlayersPage = () => {
                     </Table>
                 </TableContainer>
             )}
-            <Pagination gamesPerPage={gamesPerPage} totalGames={games.length} paginate={paginate}></Pagination>
+            <Pagination gamesPerPage={gamesPerPage} totalGames={games.length} paginate={paginate} />
         </div>
     );
 }
