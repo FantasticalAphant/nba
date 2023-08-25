@@ -19,7 +19,7 @@ export const TeamsPage = () => {
     }
 
     const handleGamesYearChange = (year) => {
-        console.log(`Year changed to ${year}`);
+        
         setSelectedGamesYear(year);
     }
 
